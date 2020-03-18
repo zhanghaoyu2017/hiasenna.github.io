@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#836FFF","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="ch02 MyBats的CRUD操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【MyBatis】的CRUD操作">
+<meta property="og:url" content="http://yoursite.com/2020/03/18/MyBatis%E7%9A%84CRUD%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="MyNotes">
+<meta property="og:description" content="ch02 MyBats的CRUD操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/03/18/MyBatis%E7%9A%84CRUD%E6%93%8D%E4%BD%9C/1.png">
+<meta property="article:published_time" content="2020-03-18T00:15:55.000Z">
+<meta property="article:modified_time" content="2020-03-18T02:15:07.956Z">
+<meta property="article:author" content="Hiasenna">
+<meta property="article:tag" content="MyBatis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/18/MyBatis%E7%9A%84CRUD%E6%93%8D%E4%BD%9C/1.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/18/MyBatis%E7%9A%84CRUD%E6%93%8D%E4%BD%9C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>【MyBatis】的CRUD操作 | MyNotes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MyNotes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>阅读排行</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/zhanghaoyu2017" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/18/MyBatis%E7%9A%84CRUD%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hiasenna">
+      <meta itemprop="description" content="自律 稳健">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MyNotes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【MyBatis】的CRUD操作
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-18 08:15:55 / 修改时间：10:15:07" itemprop="dateCreated datePublished" datetime="2020-03-18T08:15:55+08:00">2020-03-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MyBatis/" itemprop="url" rel="index"><span itemprop="name">MyBatis</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+            <div class="post-description">ch02 MyBats的CRUD操作</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="动态代理机制"><a href="#动态代理机制" class="headerlink" title="动态代理机制"></a>动态代理机制</h3><h4 id="MyBatis和数据库的交互有两种方式："><a href="#MyBatis和数据库的交互有两种方式：" class="headerlink" title="MyBatis和数据库的交互有两种方式："></a>MyBatis和数据库的交互有两种方式：</h4><h5 id="使用传统的MyBatis提供的API"><a href="#使用传统的MyBatis提供的API" class="headerlink" title="使用传统的MyBatis提供的API"></a>使用传统的MyBatis提供的API</h5><p>使用传统的MyBatis提供的API ，需要传递Statement Id 和查询参数给 SqlSession 对象，MyBatis 提供了非常方便和简单的API，供用户实现对数据库的增删改查数据操作</p>
+<h5 id="使用Mapper接口"><a href="#使用Mapper接口" class="headerlink" title="使用Mapper接口"></a>使用Mapper接口</h5><p>使用Mapper接口，MyBatis 将配置文件中的每一个&lt;mapper&gt; 元素抽象为一个 Mapper 接口，而这个接口中声明的方法和&lt;mapper&gt; 元素中的&lt;select|update|delete|insert&gt; 子元素相对应</p>
+<h4 id="为什么Mapper接口中的抽象方法，没有自己定义实现类却能被正常调用呢？"><a href="#为什么Mapper接口中的抽象方法，没有自己定义实现类却能被正常调用呢？" class="headerlink" title="为什么Mapper接口中的抽象方法，没有自己定义实现类却能被正常调用呢？"></a>为什么Mapper接口中的抽象方法，没有自己定义实现类却能被正常调用呢？</h4><ul>
+<li>MyBatis在Mapper接口上使用了动态代理</li>
+<li>代理机制是Java中常用的设计模式，分为静态代理和动态代理。</li>
+</ul>
+<p><strong>静态代理</strong>：在程序编译时已经将接口、代理类和被代理类等确定下来</p>
+<p><strong>动态代理</strong>：代理类在程序运行期间动态创建</p>
+<h4 id="Java中动态代理的实现"><a href="#Java中动态代理的实现" class="headerlink" title="Java中动态代理的实现"></a>Java中动态代理的实现</h4><p>在java的java.lang.reflect包下提供了一个Proxy类和一个InvocationHandler接口，通过这个类和这个接口可以生成JDK动态代理类和动态代理对象。</p>
+<p><img data-src="1.png" alt="1.png"></p>
+<ul>
+<li>通过sqlSession.getMapper(XXXMapper.class) 方法，MyBatis 会根据相应的接口声明的方法信息，通过动态代理机制生成一个Mapper 实例</li>
+<li>使用Mapper 接口的某一个方法时，MyBatis 会调用MapperProxy类的invoke()方法</li>
+<li>底层还是通过SqlSession的select、update、delete、insert等方法来实现对数据库的操作</li>
+</ul>
+<h3 id="插入操作"><a href="#插入操作" class="headerlink" title="插入操作"></a>插入操作</h3><h4 id="单条插入"><a href="#单条插入" class="headerlink" title="单条插入"></a>单条插入</h4><p>在映射器接口中定义如下方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">insert</span><span class="params">(User user)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>在映射文件中添加如下代码</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insert"</span> <span class="attr">parameterType</span>=<span class="string">"com.mybatis.entity.User"</span>&gt;</span></span><br><span class="line">    insert into USER(id,user_name,password) </span><br><span class="line">    values(#&#123;id&#125;,#&#123;userName&#125;,#&#123;password&#125;) </span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>insert元素，用于映射插入语句</strong></p>
+<ul>
+<li>id属性：命名空间中的唯一标识符，为Mapper接口中的方法名</li>
+<li>parameterType：指定了方法的参数类型，为可选项可以省略</li>
+<li>元素的内容为插入的SQL语句</li>
+<li>#{id}：MyBatis SQL中使用预编译参数的一种方式，当实际参数为JavaBean对象时，大括号中的id是其属性名</li>
+</ul>
+<p>测试代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SqlSession session = MyBatisUtil.openSqlSession();</span><br><span class="line">UserMapper userMapper = session.getMapper(UserMapper<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">User u = <span class="keyword">new</span> User(<span class="number">1</span>,<span class="string">"张三"</span>,<span class="number">18</span>);</span><br><span class="line"><span class="keyword">int</span> num = userMapper.insert(u);</span><br><span class="line">session.commit();</span><br><span class="line">session.close();</span><br></pre></td></tr></table></figure>
+
+<p><strong>insert方法的返回值num是执行插入语句所影响的行数</strong></p>
+<h4 id="使用JDBC方式返回主键自增的值"><a href="#使用JDBC方式返回主键自增的值" class="headerlink" title="使用JDBC方式返回主键自增的值"></a>使用JDBC方式返回主键自增的值</h4><ul>
+<li>如果数据库设计时，主键字段为自动增长，那么需要插入的User对象的 </li>
+<li></li>
+<li>如果想在执行插入操作以后返回表中的主键值，需要在映射文件中insert元素中加上如下两个属性</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insert"</span> <span class="attr">useGeneratedKeys</span>=<span class="string">"true"</span> <span class="attr">keyProperty</span>=<span class="string">"id"</span>&gt;</span></span><br><span class="line">    insert into USER(id,user_name,password) </span><br><span class="line">    values(#&#123;id&#125;,#&#123;userName&#125;,#&#123;password&#125;) </span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>useGeneratedKeys属性仅对 insert 和 update 有用，这会令 MyBatis 使用 JDBC 的 getGeneratedKeys 方法来取出由数据库内部生成的主键</li>
+<li>keyProperty  属性仅对 insert 和 update 有用，唯一标记一个属性，获得的主键值将会赋值给该属性</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> num = userMapper.insert(u);</span><br><span class="line">System.out.println(u.getId());</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用selectKey返回主键的值"><a href="#使用selectKey返回主键的值" class="headerlink" title="使用selectKey返回主键的值"></a>使用selectKey返回主键的值</h4><p>对于一些不提供主键自增功能的数据库，如Oracle，需要使用selectKey标签来获取主键的值</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insert"</span> <span class="attr">useGeneratedKeys</span>=<span class="string">"true"</span> <span class="attr">keyProperty</span>=<span class="string">"id"</span>&gt;</span></span><br><span class="line">    insert into USER(id,user_name,password) </span><br><span class="line">    values(#&#123;id&#125;,#&#123;userName&#125;,#&#123;password&#125;) </span><br><span class="line">    <span class="tag">&lt;<span class="name">selectKey</span> <span class="attr">resultType</span>=<span class="string">"int"</span> <span class="attr">keyProperty</span>=<span class="string">"id"</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">order</span>=<span class="string">"AFTER"</span>&gt;</span></span><br><span class="line">        SELECT LAST_INSERT_ID()</span><br><span class="line">    <span class="tag">&lt;/<span class="name">selectKey</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>keyProperty属性表示主键所对应的属性名</p>
+</li>
+<li><p>resultType属性用于设置返回值类型</p>
+</li>
+<li><p>在MySQL中order属性设置为after，表示当前记录的主键值在insert语句执行成功后才能获取到，Oracle中设置为before</p>
+</li>
+<li><p>selectKey元素中的内容是一个独立的SQL语句，在MySQL中SELECT LAST_INSERT_ID()用于获取数据库中最后插入的数据的主键值</p>
+</li>
+<li><p>在Oracle中应该使用SELECT SEQ_ID.nextval from dual 用来获取序列中的一个值</p>
+</li>
+</ul>
+<h3 id="查询操作"><a href="#查询操作" class="headerlink" title="查询操作"></a>查询操作</h3><h4 id="普通查询"><a href="#普通查询" class="headerlink" title="普通查询"></a>普通查询</h4><p>根据用户id查询单条记录，在映射器接口中定义如下方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> User <span class="title">selectById</span><span class="params">(Integer id)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>当实体类的属性名与数据库表的字段名一一对应时，映射代码如下所示：select元素用于映射查询语句</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectById"</span> <span class="attr">resultType</span>=<span class="string">"com.mybatis.entity.User"</span>&gt;</span></span><br><span class="line">    select * from USER where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SqlSession session = MyBatisUtil.openSqlSession();</span><br><span class="line">UserMapper userMapper = session.getMapper(UserMapper<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">User u = userMapper.selectById(<span class="number">10</span>);</span><br><span class="line">System.out.println(u);</span><br><span class="line">session.close();</span><br></pre></td></tr></table></figure>
+
+<p>当实体类属性名与表字段不一致时，可以使用resultMap元素映射其对应关系</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"com.mybatis.entity.User"</span> <span class="attr">id</span>=<span class="string">"userMap"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"id"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"userName"</span> <span class="attr">column</span>=<span class="string">"user_name"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"password"</span> <span class="attr">column</span>=<span class="string">"password"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectById"</span> <span class="attr">resultMap</span>=<span class="string">"userMap"</span>&gt;</span></span><br><span class="line">    select * from USER where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>resultMap是一种很重要的配置结果映射的方法</strong></p>
+<ul>
+<li>id属性：必填，是结果映射的唯一标识，与select元素中resultMap属性的值一致</li>
+<li>type属性：必填，用于指定查询结果所映射到的Java对象类型</li>
+<li>id子元素：配置id对应的column（字段名）和property（属性名）</li>
+<li>result子元素：配置普通结果对应的字段名和属性名</li>
+</ul>
+<p>当实体类属性与表字段不一致时，也可以通过设置别名进行映射</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectAllUsers"</span> <span class="attr">resultType</span>=<span class="string">"com.mybatis.entity.User"</span>&gt;</span></span><br><span class="line">    select id,</span><br><span class="line">        user_name userName,</span><br><span class="line">        password</span><br><span class="line">    from USER</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="模糊查询like"><a href="#模糊查询like" class="headerlink" title="模糊查询like"></a>模糊查询like</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findLike"</span> <span class="attr">resultMap</span>=<span class="string">"userMap"</span>&gt;</span></span><br><span class="line">    select * from user where user_name like "%"#&#123;name&#125;"%"</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>表达式: user_name like”%”#{name}”%” #起到<strong>占位符</strong>的作用</p>
+<h3 id="更新操作"><a href="#更新操作" class="headerlink" title="更新操作"></a>更新操作</h3><p>在映射器接口中定义如下方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">updateById</span><span class="params">(User user)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>在映射文件中添加如下代码</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateById"</span>&gt;</span></span><br><span class="line">    update user </span><br><span class="line">    set user_name = #&#123;userName&#125;,</span><br><span class="line">        password = #&#123;password&#125;</span><br><span class="line">    where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">update</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SqlSession session = MyBatisUtil.openSqlSession();</span><br><span class="line">User u = <span class="keyword">new</span> User();</span><br><span class="line">u.setId(<span class="number">10</span>);</span><br><span class="line">u.setUserName(<span class="string">"张三"</span>);</span><br><span class="line">u.setPassword(<span class="string">"123456"</span>);</span><br><span class="line"><span class="keyword">int</span> num = userMapper.updateById(u);</span><br><span class="line">session.commit();</span><br><span class="line">session.close();</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h3><p>删除同更新操作类似，在映射器接口中定义如下方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">deleteById</span><span class="params">(Integer id)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>在映射文件中添加如下代码</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">"deleteById"</span>&gt;</span></span><br><span class="line">    delete from user where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">delete</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SqlSession session = MyBatisUtil.openSqlSession();</span><br><span class="line"><span class="keyword">int</span> num = userMapper.deleteById(<span class="number">10</span>);</span><br><span class="line">System.out.println(num);</span><br><span class="line">session.commit();</span><br><span class="line">session.close();</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Hiasenna 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Hiasenna 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/MyBatis/" rel="tag"><i class="fa fa-tag"></i> MyBatis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/17/MyBatis%E6%A1%86%E6%9E%B6%E6%A6%82%E8%BF%B0/" rel="prev" title="【MyBatis】框架概述">
+      <i class="fa fa-chevron-left"></i> 【MyBatis】框架概述
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#动态代理机制"><span class="nav-text">动态代理机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MyBatis和数据库的交互有两种方式："><span class="nav-text">MyBatis和数据库的交互有两种方式：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用传统的MyBatis提供的API"><span class="nav-text">使用传统的MyBatis提供的API</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用Mapper接口"><span class="nav-text">使用Mapper接口</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么Mapper接口中的抽象方法，没有自己定义实现类却能被正常调用呢？"><span class="nav-text">为什么Mapper接口中的抽象方法，没有自己定义实现类却能被正常调用呢？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java中动态代理的实现"><span class="nav-text">Java中动态代理的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入操作"><span class="nav-text">插入操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单条插入"><span class="nav-text">单条插入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用JDBC方式返回主键自增的值"><span class="nav-text">使用JDBC方式返回主键自增的值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用selectKey返回主键的值"><span class="nav-text">使用selectKey返回主键的值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询操作"><span class="nav-text">查询操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#普通查询"><span class="nav-text">普通查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模糊查询like"><span class="nav-text">模糊查询like</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新操作"><span class="nav-text">更新操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除操作"><span class="nav-text">删除操作</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hiasenna"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Hiasenna</p>
+  <div class="site-description" itemprop="description">自律 稳健</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhanghaoyu2017" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhanghaoyu2017" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hiasenna</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">95k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:26</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
