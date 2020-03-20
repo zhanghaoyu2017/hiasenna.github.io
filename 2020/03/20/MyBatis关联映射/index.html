@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#836FFF","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="ch03 MyBatis关联映射">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【MyBatis】关联映射">
+<meta property="og:url" content="http://yoursite.com/2020/03/20/MyBatis%E5%85%B3%E8%81%94%E6%98%A0%E5%B0%84/index.html">
+<meta property="og:site_name" content="MyNotes">
+<meta property="og:description" content="ch03 MyBatis关联映射">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/03/20/MyBatis%E5%85%B3%E8%81%94%E6%98%A0%E5%B0%84/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/20/MyBatis%E5%85%B3%E8%81%94%E6%98%A0%E5%B0%84/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/20/MyBatis%E5%85%B3%E8%81%94%E6%98%A0%E5%B0%84/3.png">
+<meta property="article:published_time" content="2020-03-20T00:14:04.000Z">
+<meta property="article:modified_time" content="2020-03-20T03:02:37.247Z">
+<meta property="article:author" content="Hiasenna">
+<meta property="article:tag" content="MyBatis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/20/MyBatis%E5%85%B3%E8%81%94%E6%98%A0%E5%B0%84/1.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/20/MyBatis%E5%85%B3%E8%81%94%E6%98%A0%E5%B0%84/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>【MyBatis】关联映射 | MyNotes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MyNotes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>阅读排行</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/zhanghaoyu2017" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/20/MyBatis%E5%85%B3%E8%81%94%E6%98%A0%E5%B0%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hiasenna">
+      <meta itemprop="description" content="自律 稳健">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MyNotes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【MyBatis】关联映射
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-20 08:14:04 / 修改时间：11:02:37" itemprop="dateCreated datePublished" datetime="2020-03-20T08:14:04+08:00">2020-03-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MyBatis/" itemprop="url" rel="index"><span itemprop="name">MyBatis</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+            <div class="post-description">ch03 MyBatis关联映射</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="一对一映射"><a href="#一对一映射" class="headerlink" title="一对一映射"></a>一对一映射</h2><p>在某网络购物系统中，一个用户只能拥有一个购物车，用户与购物车的关系可以设计为一对一关系</p>
+<h3 id="数据库表结构（唯一外键关联）"><a href="#数据库表结构（唯一外键关联）" class="headerlink" title="数据库表结构（唯一外键关联）"></a>数据库表结构（唯一外键关联）</h3><p><img data-src="1.png" alt="1.png"></p>
+<h3 id="创建两个实体类和映射接口"><a href="#创建两个实体类和映射接口" class="headerlink" title="创建两个实体类和映射接口"></a>创建两个实体类和映射接口</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">private</span> String username;</span><br><span class="line">	<span class="keyword">private</span> String password;</span><br><span class="line">	<span class="keyword">private</span> ShoppingCart shoppingCart;</span><br><span class="line">	...</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShoppingCart</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> price;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> user_id;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="实现根据用户id查询出所有用户信息，包括该用户的购物车信息"><a href="#实现根据用户id查询出所有用户信息，包括该用户的购物车信息" class="headerlink" title="实现根据用户id查询出所有用户信息，包括该用户的购物车信息"></a>实现根据用户id查询出所有用户信息，包括该用户的购物车信息</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">findUserAndShoppingCartById</span><span class="params">(Integer id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MyBatis中处理一对一关联关系"><a href="#MyBatis中处理一对一关联关系" class="headerlink" title="MyBatis中处理一对一关联关系"></a>MyBatis中处理一对一关联关系</h3><h4 id="方式一：使用自动映射处理一对一关系，也就是通过别名自动将值匹配到对应的字段上"><a href="#方式一：使用自动映射处理一对一关系，也就是通过别名自动将值匹配到对应的字段上" class="headerlink" title="方式一：使用自动映射处理一对一关系，也就是通过别名自动将值匹配到对应的字段上"></a>方式一：使用自动映射处理一对一关系，也就是通过别名自动将值匹配到对应的字段上</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findUserAndShoppingCartById"</span> <span class="attr">resultType</span>=<span class="string">"top.hiasenna.entity.User"</span>&gt;</span></span><br><span class="line">		select u.id,username,password,sc.cart_id "shoppingCart.id",price 						"shoppingCart.price"</span><br><span class="line">		from user u </span><br><span class="line">		left join shoppingcart sc on u.id=sc.user_id</span><br><span class="line">		where u.id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>复杂的属性映射时，可以多层嵌套，比如将shopping_cart表中的cart_id字段映射到shoppingCart.id属性上</p>
+<h4 id="方式二：在XML映射文件中配置结果映射"><a href="#方式二：在XML映射文件中配置结果映射" class="headerlink" title="方式二：在XML映射文件中配置结果映射"></a>方式二：在XML映射文件中配置结果映射</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"top.hiasenna.entity.User"</span> <span class="attr">id</span>=<span class="string">"userShoppingCartMap"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"id"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"username"</span> <span class="attr">column</span>=<span class="string">"username"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"password"</span> <span class="attr">column</span>=<span class="string">"password"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"shoppingCart.id"</span> <span class="attr">column</span>=<span class="string">"cart_id"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"shoppingCart.price"</span> <span class="attr">column</span>=<span class="string">"price"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findUserAndShoppingCartById2"</span> <span class="attr">resultMap</span>=<span class="string">"userShoppingCartMap"</span>&gt;</span></span><br><span class="line">		select u.id, u.username, u.password,</span><br><span class="line">		s.cart_id, s.price</span><br><span class="line">		from user u</span><br><span class="line">		left join shoppingcart s on u.id = s.user_id</span><br><span class="line">		where u.id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用这种方式同自动映射方式相似之处为，ShoppingCart中的属性配置部分使用了”shoppingCart.”前缀</p>
+<h4 id="方式三：association元素用于和一个复杂的类型进行关联"><a href="#方式三：association元素用于和一个复杂的类型进行关联" class="headerlink" title="方式三：association元素用于和一个复杂的类型进行关联"></a>方式三：association元素用于和一个复杂的类型进行关联</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"top.hiasenna.entity.User"</span> <span class="attr">id</span>=<span class="string">"userShoppingCartMap2"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"id"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"username"</span> <span class="attr">column</span>=<span class="string">"username"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"password"</span> <span class="attr">column</span>=<span class="string">"password"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">"shoppingCart"</span> <span class="attr">javaType</span>=<span class="string">"top.hiasenna.entity.ShoppingCart"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"cart_id"</span>/&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"price"</span> <span class="attr">column</span>=<span class="string">"price"</span>/&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">association</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findUserAndShoppingCartById3"</span> <span class="attr">resultMap</span>=<span class="string">"userShoppingCartMap2"</span>&gt;</span></span><br><span class="line">		select u.id,u.username, u.password,s.cart_id, s.price</span><br><span class="line">		from user u</span><br><span class="line">		left join</span><br><span class="line">		shoppingcart s on u.id = s.user_id</span><br><span class="line">		where u.id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>association元素包含以下属性</p>
+<ul>
+<li>property：对应实体类中的属性名，必填项</li>
+<li>javaType：属性对应的java类型，可选项</li>
+<li>resultMap：可以直接使用现有的resultMap，而不需要在这里配置，可选项</li>
+</ul>
+<h4 id="方式四：association元素的嵌套查询"><a href="#方式四：association元素的嵌套查询" class="headerlink" title="方式四：association元素的嵌套查询"></a>方式四：association元素的嵌套查询</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"top.hiasenna.entity.User"</span> <span class="attr">id</span>=<span class="string">"userShoppingCartMap3"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"id"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"username"</span> <span class="attr">column</span>=<span class="string">"username"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"password"</span> <span class="attr">column</span>=<span class="string">"password"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">"shoppingCart"</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">column</span>=<span class="string">"&#123;user_id=id&#125;"</span> <span class="attr">select</span>=<span class="string">"top.hiasenna.mapper.ShoppingCartMapper.findShoppingCartById"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>association元素的嵌套查询常用的属性如下</p>
+<ul>
+<li>select：另一个查询映射的statement id，MyBatis会额外执行这个查询获取嵌套对象</li>
+<li>column：列名，将主查询中列的结果作为嵌套查询的参数，如column=“{prop1=col1,prop2=col2}”，其中prop1和prop2将作为嵌套查询的参数</li>
+<li>fetchType：数据加载方式，可选值为lazy和eager，分别为延迟加载和积极加载，会覆盖全局的lazyLoadingEnable配置</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findUserAndShoppingCartById4"</span> <span class="attr">resultMap</span>=<span class="string">"userShoppingCartMap3"</span>&gt;</span></span><br><span class="line">		select id,</span><br><span class="line">		username, password</span><br><span class="line">		from user </span><br><span class="line">		where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong>此处查询语句只包含user表，购物车信息需要在ShoppingCartMapper.xml中配置findShoppingCartById方法进行查询</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"top.hiasenna.entity.ShoppingCart"</span> <span class="attr">id</span>=<span class="string">"shoppingCartMap"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"cart_id"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"price"</span> <span class="attr">column</span>=<span class="string">"price"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findShoppingCartById"</span> <span class="attr">resultMap</span>=<span class="string">"shoppingCartMap"</span>&gt;</span></span><br><span class="line">		select * from shoppingcart where user_id=#&#123;user_id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>嵌套查询会多执行SQL，当查询N条数据时，就会出现N+1次查询问题</p>
+<p>为了解决N+1次查询问题，可以设置延迟加载策略，将association元素的fetchType属性设置为lazy</p>
+<p>在MyBatis主配置文件中有两个延时加载相关settings设置</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>设置项</strong></th>
+<th align="center"><strong>描述</strong></th>
+<th align="center"><strong>有效值</strong></th>
+<th align="center"><strong>默认值</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>lazyLoadingEnabled</strong></td>
+<td align="center"><strong>延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。 可通过设置fetchType属性来覆盖该项的开关状态</strong></td>
+<td align="center"><strong>true |false</strong></td>
+<td align="center"><strong>false</strong></td>
+</tr>
+<tr>
+<td align="center"><strong>aggressiveLazyLoading</strong></td>
+<td align="center"><strong>当开启时，任何方法的调用都会加载该对象的所有属性。否则，每个属性会按需加载</strong></td>
+<td align="center"><strong>true |false</strong></td>
+<td align="center"><strong>false</strong></td>
+</tr>
+</tbody></table>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"lazyLoadingEnabled"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">"aggressiveLazyLoading"</span> <span class="attr">value</span>=<span class="string">"false"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>设置为延迟加载的对象，默认情况下，当调用该对象的equals、hashCode、toString、clone方法时，就会加载该对象的全部数据</p>
+<h4 id="对比四种方式"><a href="#对比四种方式" class="headerlink" title="对比四种方式"></a>对比四种方式</h4><ul>
+<li>前面的三种方式都属于“关联的嵌套结果映射“,即通过一次SQL查询根据表或指定的属性映射到不同的对象中</li>
+<li>最后一种方式属于“关联的嵌套查询”，利用简单的SQL语句，通过多次查询得到想要的结果，可实现延迟加载效果</li>
+</ul>
+<h2 id="一对多关联映射"><a href="#一对多关联映射" class="headerlink" title="一对多关联映射"></a>一对多关联映射</h2><h3 id="MyBatis中处理一对多关联关系"><a href="#MyBatis中处理一对多关联关系" class="headerlink" title="MyBatis中处理一对多关联关系"></a>MyBatis中处理一对多关联关系</h3><h4 id="方式一：与association类似，集合的嵌套结果映射就是指通过一次SQL查询得到所有的结果"><a href="#方式一：与association类似，集合的嵌套结果映射就是指通过一次SQL查询得到所有的结果" class="headerlink" title="方式一：与association类似，集合的嵌套结果映射就是指通过一次SQL查询得到所有的结果"></a>方式一：与association类似，集合的嵌套结果映射就是指通过一次SQL查询得到所有的结果</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"com.mybatis.entity.User"</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"userMap"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"id"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"userName"</span> <span class="attr">column</span>=<span class="string">"user_name"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"password"</span> <span class="attr">column</span>=<span class="string">"password"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注：</strong>由于此映射会频繁用到，可以将其单独配置，后面可以直接通过id引用</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"com.mybatis.entity.User"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">id</span>=<span class="string">"userAndOrderListMap"</span> <span class="attr">extends</span>=<span class="string">"userMap"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">"orderList"</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">ofType</span>=<span class="string">"com.mybatis.entity.Order"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"order_id"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"price"</span> <span class="attr">column</span>=<span class="string">"price"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">collection</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>resultMap元素中的extends属性可以实现结果映射的继承</li>
+<li>collection的ofType属性指定集合中元素的类型，必选项</li>
+</ul>
+<p>查询映射配置如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findUserAndOrderListById"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">resultMap</span>=<span class="string">"userAndOrderListMap"</span>&gt;</span></span><br><span class="line">    select u.id, u.user_name, u.password,</span><br><span class="line">    o.order_id, o.price</span><br><span class="line">    from user u</span><br><span class="line">    left join orders o on u.id = o.user_id</span><br><span class="line">    where u.id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="方式二：集合的嵌套查询同样会执行额外的SQL查询"><a href="#方式二：集合的嵌套查询同样会执行额外的SQL查询" class="headerlink" title="方式二：集合的嵌套查询同样会执行额外的SQL查询"></a>方式二：集合的嵌套查询同样会执行额外的SQL查询</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"com.mybatis.entity.User"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">id</span>=<span class="string">"userAndOrderListMap"</span> <span class="attr">extends</span>=<span class="string">"userMap"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">"orderList"</span> <span class="attr">column</span>=<span class="string">"&#123;uid=id&#125;"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">ofType</span>=<span class="string">"com.mybatis.entity.Order"</span>       <span class="attr">select</span>=<span class="string">"com.mybatis.mapper.OrderMapper.findOrdersByUserId"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">collection</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findUserAndOrderListById"</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">resultMap</span>=<span class="string">"userAndOrderListMap"</span>&gt;</span></span><br><span class="line">    select * from user where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>OrderMapper.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"com.mybatis.entity.Order"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">id</span>=<span class="string">"orderMap"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"order_id"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"price"</span> <span class="attr">column</span>=<span class="string">"price"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findOrdersByUserId"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">resultMap</span>=<span class="string">"orderMap"</span>&gt;</span></span><br><span class="line">    select * from orders where user_id = #&#123;uid&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="对比两种方式"><a href="#对比两种方式" class="headerlink" title="对比两种方式"></a>对比两种方式</h4><ul>
+<li>第一种方式属于“关联的嵌套结果映射“,即通过一次SQL查询根据表或指定的属性映射到不同的对象中</li>
+<li>第二种方式属于“关联的嵌套查询”，利用简单的SQL语句，通过多次查询得到想要的结果，也可以实现延迟加载效果</li>
+</ul>
+<h2 id="鉴别器映射"><a href="#鉴别器映射" class="headerlink" title="鉴别器映射"></a>鉴别器映射</h2><ul>
+<li>有时一个单独的数据库查询会返回很多种不同数据类型的结果集。discriminator鉴别器元素可以用来处理这种情况</li>
+<li>以Hibernate中继承映射为例</li>
+</ul>
+<p><img data-src="2.png" alt="2.png"></p>
+<p>数据库表结构</p>
+<p><img data-src="3.png" alt="3.png"></p>
+<h4 id="创建实体类（省略）、映射接口和映射文件"><a href="#创建实体类（省略）、映射接口和映射文件" class="headerlink" title="创建实体类（省略）、映射接口和映射文件"></a>创建实体类（省略）、映射接口和映射文件</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EmployeeMapper</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Employee <span class="title">findEmployeeById</span><span class="params">(Integer id)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"com.mybatis.entity.Employee"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"EmployeeMap"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">column</span>=<span class="string">"id"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"name"</span> <span class="attr">column</span>=<span class="string">"name"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用resultMap的extends属性来映射两个子类的属性"><a href="#使用resultMap的extends属性来映射两个子类的属性" class="headerlink" title="使用resultMap的extends属性来映射两个子类的属性"></a>使用resultMap的extends属性来映射两个子类的属性</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"com.mybatis.entity.HourlyEmployee"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">id</span>=<span class="string">"HourlyMap"</span> <span class="attr">extends</span>=<span class="string">"EmployeeMap"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"rate"</span> <span class="attr">column</span>=<span class="string">"rate"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"com.mybatis.entity.SalariedEmployee"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">id</span>=<span class="string">"SalaryMap"</span> <span class="attr">extends</span>=<span class="string">"EmployeeMap"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">property</span>=<span class="string">"salary"</span> <span class="attr">column</span>=<span class="string">"salary"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用discriminator元素映射employee-type字段"><a href="#使用discriminator元素映射employee-type字段" class="headerlink" title="使用discriminator元素映射employee_type字段"></a>使用discriminator元素映射employee_type字段</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"com.mybatis.entity.Employee"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">id</span>=<span class="string">"selectMap"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">discriminator</span> <span class="attr">column</span>=<span class="string">"employee_type"</span>   </span></span><br><span class="line"><span class="tag">        <span class="attr">javaType</span>=<span class="string">"String"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">case</span> <span class="attr">value</span>=<span class="string">"HE"</span> <span class="attr">resultMap</span>=<span class="string">"HourlyMap"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">case</span> <span class="attr">value</span>=<span class="string">"SE"</span> <span class="attr">resultMap</span>=<span class="string">"SalaryMap"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">discriminator</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>discriminator元素常用的两个属性如下：</p>
+<ul>
+<li>column：该属性用于设置需要进行鉴别比较值的列</li>
+<li>javaType：该属性用于指定列的类型</li>
+</ul>
+<p>discriminator元素可以有1个或者多个case子元素，case元素包含三个属性</p>
+<ul>
+<li>value：该值用来匹配column指定字段的值</li>
+<li>resultMap：当value值和column的值匹配时的结果映射，优先级高于resultType</li>
+<li>resultType：当value值和column的值匹配时的结果类型</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Hiasenna 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Hiasenna 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/MyBatis/" rel="tag"><i class="fa fa-tag"></i> MyBatis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/19/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%8D%95%E9%93%BE%E8%A1%A8/" rel="prev" title="数据结构与算法-单链表">
+      <i class="fa fa-chevron-left"></i> 数据结构与算法-单链表
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一对一映射"><span class="nav-text">一对一映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库表结构（唯一外键关联）"><span class="nav-text">数据库表结构（唯一外键关联）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建两个实体类和映射接口"><span class="nav-text">创建两个实体类和映射接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现根据用户id查询出所有用户信息，包括该用户的购物车信息"><span class="nav-text">实现根据用户id查询出所有用户信息，包括该用户的购物车信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis中处理一对一关联关系"><span class="nav-text">MyBatis中处理一对一关联关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方式一：使用自动映射处理一对一关系，也就是通过别名自动将值匹配到对应的字段上"><span class="nav-text">方式一：使用自动映射处理一对一关系，也就是通过别名自动将值匹配到对应的字段上</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式二：在XML映射文件中配置结果映射"><span class="nav-text">方式二：在XML映射文件中配置结果映射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式三：association元素用于和一个复杂的类型进行关联"><span class="nav-text">方式三：association元素用于和一个复杂的类型进行关联</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式四：association元素的嵌套查询"><span class="nav-text">方式四：association元素的嵌套查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对比四种方式"><span class="nav-text">对比四种方式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一对多关联映射"><span class="nav-text">一对多关联映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis中处理一对多关联关系"><span class="nav-text">MyBatis中处理一对多关联关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方式一：与association类似，集合的嵌套结果映射就是指通过一次SQL查询得到所有的结果"><span class="nav-text">方式一：与association类似，集合的嵌套结果映射就是指通过一次SQL查询得到所有的结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式二：集合的嵌套查询同样会执行额外的SQL查询"><span class="nav-text">方式二：集合的嵌套查询同样会执行额外的SQL查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对比两种方式"><span class="nav-text">对比两种方式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#鉴别器映射"><span class="nav-text">鉴别器映射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建实体类（省略）、映射接口和映射文件"><span class="nav-text">创建实体类（省略）、映射接口和映射文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用resultMap的extends属性来映射两个子类的属性"><span class="nav-text">使用resultMap的extends属性来映射两个子类的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用discriminator元素映射employee-type字段"><span class="nav-text">使用discriminator元素映射employee_type字段</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hiasenna"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Hiasenna</p>
+  <div class="site-description" itemprop="description">自律 稳健</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhanghaoyu2017" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhanghaoyu2017" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hiasenna</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">125k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:54</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
