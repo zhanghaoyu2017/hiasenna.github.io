@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/03/29/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/4.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/29/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D/5.png">
 <meta property="article:published_time" content="2020-03-29T08:47:44.000Z">
-<meta property="article:modified_time" content="2020-03-29T13:20:41.708Z">
+<meta property="article:modified_time" content="2020-04-05T02:14:37.001Z">
 <meta property="article:author" content="Hiasenna">
 <meta property="article:tag" content="数据结构与算法">
 <meta name="twitter:card" content="summary">
@@ -232,10 +232,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-29 16:47:44 / 修改时间：21:20:41" itemprop="dateCreated datePublished" datetime="2020-03-29T16:47:44+08:00">2020-03-29</time>
+              <time title="创建时间：2020-03-29 16:47:44" itemprop="dateCreated datePublished" datetime="2020-03-29T16:47:44+08:00">2020-03-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-05 10:14:37" itemprop="dateModified" datetime="2020-04-05T10:14:37+08:00">2020-04-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -259,14 +265,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.7k</span>
+              <span>3.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
             <div class="post-description">排序算法介绍、时间频度、时间复杂度计算</div>
 
@@ -280,6 +286,18 @@
 
       
         <h2 id="排序算法的介绍"><a href="#排序算法的介绍" class="headerlink" title="排序算法的介绍"></a>排序算法的介绍</h2><p>排序也称排序算法(SortAlgorithm)，排序是将 一组数据，依 指定的顺序进行 排列的过程。</p>
+<h2 id="相关术语解释："><a href="#相关术语解释：" class="headerlink" title="相关术语解释："></a>相关术语解释：</h2><ol>
+<li>稳定：如果 a 原本在 b 前面，而 a=b，排序之后 a 仍然在 b 的前面；</li>
+<li>不稳定：如果 a 原本在 b 的前面，而 a=b，排序之后 a 可能会出现在 b 的后面；</li>
+<li>内排序：所有排序操作都在内存中完成；</li>
+<li>外排序：由于数据太大，因此把数据放在磁盘中，而排序通过磁盘和内存的数据传输才能进行；</li>
+<li>时间复杂度： 一个算法执行所耗费的时间。</li>
+<li>空间复杂度：运行完一个程序所需内存的大小。</li>
+<li>n: 数据规模</li>
+<li>k: “桶”的个数</li>
+<li>In-place: 不占用额外内存</li>
+<li>Out-place: 占用额外内存</li>
+</ol>
 <h2 id="排序的分类："><a href="#排序的分类：" class="headerlink" title="排序的分类："></a>排序的分类：</h2><ol>
 <li>内部排序:<br>指将需要处理的所有数据都加载到 内部存储器( 内存)中进行排序。</li>
 <li>外部排序法：<br>数据量过大，无法全部加载到内存中，需要借助 外部存储( 文件等)进行排序。</li>
@@ -543,7 +561,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#排序算法的介绍"><span class="nav-text">排序算法的介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序的分类："><span class="nav-text">排序的分类：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法的时间复杂度"><span class="nav-text">算法的时间复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#度量一个程序-算法-执行时间的两种方法"><span class="nav-text">度量一个程序(算法)执行时间的两种方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事后统计的方法"><span class="nav-text">事后统计的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事前估算的方法"><span class="nav-text">事前估算的方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间频度"><span class="nav-text">时间频度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本介绍"><span class="nav-text">基本介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例说明-基本案例"><span class="nav-text">举例说明-基本案例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例说明-忽略常数项"><span class="nav-text">举例说明-忽略常数项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例说明-忽略低次项"><span class="nav-text">举例说明-忽略低次项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例说明-忽略系数"><span class="nav-text">举例说明-忽略系数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间复杂度"><span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的时间复杂度"><span class="nav-text">常见的时间复杂度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法的空间复杂度简介"><span class="nav-text">算法的空间复杂度简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本介绍-1"><span class="nav-text">基本介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八种排序算法的时间复杂度"><span class="nav-text">八种排序算法的时间复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、稳定性"><span class="nav-text">1、稳定性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、时间复杂度"><span class="nav-text">2、时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-排序算法的思想："><span class="nav-text">3.排序算法的思想：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-冒泡排序："><span class="nav-text">(1)冒泡排序：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-选择排序："><span class="nav-text">(2)选择排序：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-插入排序："><span class="nav-text">(3)插入排序：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-快速排序"><span class="nav-text">(4)快速排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-归并排序"><span class="nav-text">(5)归并排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-基数排序"><span class="nav-text">(6)基数排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-希尔排序-shell"><span class="nav-text">(7)希尔排序(shell)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-堆排序"><span class="nav-text">(8)堆排序</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#排序算法的介绍"><span class="nav-text">排序算法的介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关术语解释："><span class="nav-text">相关术语解释：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序的分类："><span class="nav-text">排序的分类：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法的时间复杂度"><span class="nav-text">算法的时间复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#度量一个程序-算法-执行时间的两种方法"><span class="nav-text">度量一个程序(算法)执行时间的两种方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事后统计的方法"><span class="nav-text">事后统计的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事前估算的方法"><span class="nav-text">事前估算的方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间频度"><span class="nav-text">时间频度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本介绍"><span class="nav-text">基本介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例说明-基本案例"><span class="nav-text">举例说明-基本案例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例说明-忽略常数项"><span class="nav-text">举例说明-忽略常数项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例说明-忽略低次项"><span class="nav-text">举例说明-忽略低次项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例说明-忽略系数"><span class="nav-text">举例说明-忽略系数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间复杂度"><span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的时间复杂度"><span class="nav-text">常见的时间复杂度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法的空间复杂度简介"><span class="nav-text">算法的空间复杂度简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本介绍-1"><span class="nav-text">基本介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八种排序算法的时间复杂度"><span class="nav-text">八种排序算法的时间复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、稳定性"><span class="nav-text">1、稳定性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、时间复杂度"><span class="nav-text">2、时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-排序算法的思想："><span class="nav-text">3.排序算法的思想：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-冒泡排序："><span class="nav-text">(1)冒泡排序：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-选择排序："><span class="nav-text">(2)选择排序：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-插入排序："><span class="nav-text">(3)插入排序：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-快速排序"><span class="nav-text">(4)快速排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-归并排序"><span class="nav-text">(5)归并排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-基数排序"><span class="nav-text">(6)基数排序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-希尔排序-shell"><span class="nav-text">(7)希尔排序(shell)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-堆排序"><span class="nav-text">(8)堆排序</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -616,7 +634,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:41</span>
+    <span title="站点阅读时长">3:42</span>
 </div>
 
         
