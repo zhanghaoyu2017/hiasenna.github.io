@@ -20,20 +20,28 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#836FFF","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="线性查找分析及实现">
+  <meta name="description" content="赫夫曼树基本介绍">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据结构与算法-线性查找">
-<meta property="og:url" content="http://yoursite.com/2020/04/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E6%9F%A5%E6%89%BE/index.html">
+<meta property="og:title" content="数据结构与算法-赫夫曼树">
+<meta property="og:url" content="http://yoursite.com/2020/04/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91/index.html">
 <meta property="og:site_name" content="MyNotes">
-<meta property="og:description" content="线性查找分析及实现">
+<meta property="og:description" content="赫夫曼树基本介绍">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-04-05T02:58:41.000Z">
-<meta property="article:modified_time" content="2020-04-05T03:02:58.991Z">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91/7.png">
+<meta property="article:published_time" content="2020-04-13T10:17:44.000Z">
+<meta property="article:modified_time" content="2020-04-13T15:38:15.028Z">
 <meta property="article:author" content="Hiasenna">
 <meta property="article:tag" content="数据结构与算法">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91/1.png">
 
-<link rel="canonical" href="http://yoursite.com/2020/04/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E6%9F%A5%E6%89%BE/">
+<link rel="canonical" href="http://yoursite.com/2020/04/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91/">
 
 
 <script id="page-configurations">
@@ -45,7 +53,7 @@
   };
 </script>
 
-  <title>数据结构与算法-线性查找 | MyNotes</title>
+  <title>数据结构与算法-赫夫曼树 | MyNotes</title>
   
 
 
@@ -204,7 +212,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E6%9F%A5%E6%89%BE/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E8%B5%AB%E5%A4%AB%E6%9B%BC%E6%A0%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -217,7 +225,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          数据结构与算法-线性查找
+          数据结构与算法-赫夫曼树
         </h1>
 
         <div class="post-meta">
@@ -228,7 +236,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-04-05 10:58:41 / 修改时间：11:02:58" itemprop="dateCreated datePublished" datetime="2020-04-05T10:58:41+08:00">2020-04-05</time>
+              <time title="创建时间：2020-04-13 18:17:44 / 修改时间：23:38:15" itemprop="dateCreated datePublished" datetime="2020-04-13T18:17:44+08:00">2020-04-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,7 +261,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>537</span>
+              <span>835</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -262,7 +270,7 @@
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               <span>1 分钟</span>
             </span>
-            <div class="post-description">线性查找分析及实现</div>
+            <div class="post-description">赫夫曼树基本介绍</div>
 
         </div>
       </header>
@@ -273,8 +281,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeqSearch</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> arr[] = &#123; <span class="number">1</span>, <span class="number">9</span>, <span class="number">11</span>, -<span class="number">1</span>, <span class="number">34</span>, <span class="number">89</span> &#125;;<span class="comment">// 没有顺序的数组</span></span><br><span class="line">		<span class="keyword">int</span> index = seqSearch(arr, -<span class="number">11</span>);</span><br><span class="line">		<span class="keyword">if</span> (index == -<span class="number">1</span>) &#123;</span><br><span class="line">			System.out.println(<span class="string">"没有找到到"</span>);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"找到，下标为="</span> + index);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 这里我们实现的线性查找是找到一个满足条件的值，就返回</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> value</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">seqSearch</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 线性查找是逐一比对，发现有相同值，就返回下标</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (arr[i] == value) &#123;</span><br><span class="line">				<span class="keyword">return</span> i;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+        <h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><ol>
+<li>给定 n 个权值作为 n 个叶子结点，构造一棵二叉树，<strong>若该树的带权路径长度(wpl) 达到最小</strong>，称这样的二叉树为最优二叉树，也称为哈夫曼树(Huffman Tree), 还有的书翻译为霍夫曼树。</li>
+<li>赫夫曼树是带权路径长度最短的树，权值较大的结点离根较近</li>
+</ol>
+<h2 id="赫夫曼树几个重要概念和举例说明"><a href="#赫夫曼树几个重要概念和举例说明" class="headerlink" title="赫夫曼树几个重要概念和举例说明"></a>赫夫曼树几个重要概念和举例说明</h2><ol>
+<li><strong>路径和路径长度</strong>：在一棵树中，从一个结点往下可以达到的孩子或孙子结点之间的通路，称为路径。<strong>通路中分支的数目称为路径长度</strong>。若规定根结点的层数为 1，则从根结点到第 L 层结点的路径长度为 L-1</li>
+<li><strong>结点的权及带权路径长度</strong>：若将树中结点赋给一个有着某种含义的数值，则这个数值称为该结点的权。 <strong>结</strong><br><strong>点的带权路径长度为</strong>：从根结点到该结点之间的路径长度与该结点的权的乘积</li>
+<li>树的带权路径长度：树的带权路径长度规定为 <strong>所有叶子结点的带权路径长度之和</strong>，<strong>记为 WPL</strong>(weighted path<br>length) ,权值越大的结点离根结点越近的二叉树才是最优二叉树。</li>
+<li><strong>WPL 最小的就是赫夫曼树</strong></li>
+</ol>
+<p><img data-src="1.png" alt="1.png"></p>
+<h2 id="赫夫曼树创建思路图解"><a href="#赫夫曼树创建思路图解" class="headerlink" title="赫夫曼树创建思路图解"></a>赫夫曼树创建思路图解</h2><p>给你一个数列 {13, 7, 8, 3, 29, 6, 1}，要求转成一颗赫夫曼树.</p>
+<p><strong>构成赫夫曼树的步骤：</strong></p>
+<ol>
+<li>从小到大进行排序, 将每一个数据，每个数据都是一个节点 ， 每个节点可以看成是一颗最简单的二叉树</li>
+<li>取出根节点权值最小的两颗二叉树</li>
+<li>组成一颗新的二叉树, 该新的二叉树的根节点的权值是前面两颗二叉树根节点权值的和</li>
+<li>再将这颗新的二叉树，以根节点的权值大小 再次排序， 不断重复 1-2-3-4 的步骤，直到数列中，所有的数<br>据都被处理，就得到一颗赫夫曼树</li>
+<li>图解:</li>
+</ol>
+<p>如何构建一颗 赫夫曼树的步骤</p>
+<p>数组： 13, 7, 8, 3, 29, 6, 1</p>
+<p>排序后：1,3, 6, 7, 8, 13, 29 </p>
+<h3 id="1-挑出-1-和-3-组成新的二叉树"><a href="#1-挑出-1-和-3-组成新的二叉树" class="headerlink" title="1.挑出 1 和 3 组成新的二叉树"></a>1.挑出 1 和 3 组成新的二叉树</h3><p><img data-src="2.png" alt="2.png"></p>
+<p>数组还剩 4,6,7,8,13,29</p>
+<h3 id="2-挑出-4-和-6-组成新的二叉树"><a href="#2-挑出-4-和-6-组成新的二叉树" class="headerlink" title="2.挑出 4 和 6 组成新的二叉树"></a>2.挑出 4 和 6 组成新的二叉树</h3><p><img data-src="3.png" alt="3.png"></p>
+<p>数组还剩 7,8,10,13,29</p>
+<h3 id="3-挑出-7-和-8-组成新的二叉树"><a href="#3-挑出-7-和-8-组成新的二叉树" class="headerlink" title="3.挑出 7 和 8 组成新的二叉树"></a>3.挑出 7 和 8 组成新的二叉树</h3><p><img data-src="4.png" alt="4.png"></p>
+<p>数组还剩 10,13,15,29</p>
+<h3 id="4-挑出-10-和-13-组成新的二叉树"><a href="#4-挑出-10-和-13-组成新的二叉树" class="headerlink" title="4.挑出 10 和 13 组成新的二叉树"></a>4.挑出 10 和 13 组成新的二叉树</h3><p><img data-src="5.png" alt="5.png"></p>
+<p>数组还剩 15,23,29</p>
+<h3 id="5-挑出-15-和-23-组成新的二叉树"><a href="#5-挑出-15-和-23-组成新的二叉树" class="headerlink" title="5.挑出 15 和 23 组成新的二叉树"></a>5.挑出 15 和 23 组成新的二叉树</h3><p><img data-src="6.png" alt="6.png"></p>
+<p>数组还剩  29,38</p>
+<h3 id="6-挑出-29-和-38-组成新的二叉树"><a href="#6-挑出-29-和-38-组成新的二叉树" class="headerlink" title="6.挑出 29 和 38 组成新的二叉树"></a>6.挑出 29 和 38 组成新的二叉树</h3><p><img data-src="7.png" alt="7.png"></p>
 
     </div>
 
@@ -314,13 +354,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/04/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F/" rel="prev" title="数据结构与算法-基数排序">
-      <i class="fa fa-chevron-left"></i> 数据结构与算法-基数排序
+    <a href="/2020/04/13/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%A0%86%E6%8E%92%E5%BA%8F/" rel="prev" title="数据结构与算法-堆排序">
+      <i class="fa fa-chevron-left"></i> 数据结构与算法-堆排序
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/04/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" rel="next" title="数据结构与算法-二分查找">
-      数据结构与算法-二分查找 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -380,6 +417,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本介绍"><span class="nav-text">基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#赫夫曼树几个重要概念和举例说明"><span class="nav-text">赫夫曼树几个重要概念和举例说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#赫夫曼树创建思路图解"><span class="nav-text">赫夫曼树创建思路图解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-挑出-1-和-3-组成新的二叉树"><span class="nav-text">1.挑出 1 和 3 组成新的二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-挑出-4-和-6-组成新的二叉树"><span class="nav-text">2.挑出 4 和 6 组成新的二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-挑出-7-和-8-组成新的二叉树"><span class="nav-text">3.挑出 7 和 8 组成新的二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-挑出-10-和-13-组成新的二叉树"><span class="nav-text">4.挑出 10 和 13 组成新的二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-挑出-15-和-23-组成新的二叉树"><span class="nav-text">5.挑出 15 和 23 组成新的二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-挑出-29-和-38-组成新的二叉树"><span class="nav-text">6.挑出 29 和 38 组成新的二叉树</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
