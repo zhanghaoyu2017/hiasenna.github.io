@@ -20,20 +20,24 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#836FFF","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="线性查找分析及实现">
+  <meta name="description" content="整理电商项目中解决的难点">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据结构与算法-线性查找">
-<meta property="og:url" content="http://yoursite.com/2020/04/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E6%9F%A5%E6%89%BE/index.html">
+<meta property="og:title" content="电商项目整理">
+<meta property="og:url" content="http://yoursite.com/2020/04/20/%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE%E6%95%B4%E7%90%86/index.html">
 <meta property="og:site_name" content="MyNotes">
-<meta property="og:description" content="线性查找分析及实现">
+<meta property="og:description" content="整理电商项目中解决的难点">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-04-05T02:58:41.000Z">
-<meta property="article:modified_time" content="2020-04-05T03:02:58.991Z">
+<meta property="og:image" content="http://yoursite.com/2020/04/20/%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE%E6%95%B4%E7%90%86/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/20/%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE%E6%95%B4%E7%90%86/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/20/%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE%E6%95%B4%E7%90%86/2.png">
+<meta property="article:published_time" content="2020-04-20T15:48:43.000Z">
+<meta property="article:modified_time" content="2020-04-20T16:03:39.818Z">
 <meta property="article:author" content="Hiasenna">
-<meta property="article:tag" content="数据结构与算法">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/20/%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE%E6%95%B4%E7%90%86/3.png">
 
-<link rel="canonical" href="http://yoursite.com/2020/04/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E6%9F%A5%E6%89%BE/">
+<link rel="canonical" href="http://yoursite.com/2020/04/20/%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE%E6%95%B4%E7%90%86/">
 
 
 <script id="page-configurations">
@@ -45,7 +49,7 @@
   };
 </script>
 
-  <title>数据结构与算法-线性查找 | MyNotes</title>
+  <title>电商项目整理 | MyNotes</title>
   
 
 
@@ -204,7 +208,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E7%BA%BF%E6%80%A7%E6%9F%A5%E6%89%BE/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/20/%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE%E6%95%B4%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -217,7 +221,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          数据结构与算法-线性查找
+          电商项目整理
         </h1>
 
         <div class="post-meta">
@@ -226,17 +230,23 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-04-05 10:58:41 / 修改时间：11:02:58" itemprop="dateCreated datePublished" datetime="2020-04-05T10:58:41+08:00">2020-04-05</time>
+              <time title="创建时间：2020-04-20 23:48:43" itemprop="dateCreated datePublished" datetime="2020-04-20T23:48:43+08:00">2020-04-20</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-21 00:03:39" itemprop="dateModified" datetime="2020-04-21T00:03:39+08:00">2020-04-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+                  <a href="/categories/%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index"><span itemprop="name">电商项目</span></a>
                 </span>
             </span>
 
@@ -253,7 +263,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>537</span>
+              <span>1.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -262,7 +272,7 @@
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               <span>1 分钟</span>
             </span>
-            <div class="post-description">线性查找分析及实现</div>
+            <div class="post-description">整理电商项目中解决的难点</div>
 
         </div>
       </header>
@@ -273,8 +283,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeqSearch</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> arr[] = &#123; <span class="number">1</span>, <span class="number">9</span>, <span class="number">11</span>, -<span class="number">1</span>, <span class="number">34</span>, <span class="number">89</span> &#125;;<span class="comment">// 没有顺序的数组</span></span><br><span class="line">		<span class="keyword">int</span> index = seqSearch(arr, -<span class="number">11</span>);</span><br><span class="line">		<span class="keyword">if</span> (index == -<span class="number">1</span>) &#123;</span><br><span class="line">			System.out.println(<span class="string">"没有找到到"</span>);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"找到，下标为="</span> + index);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 这里我们实现的线性查找是找到一个满足条件的值，就返回</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> value</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">seqSearch</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 线性查找是逐一比对，发现有相同值，就返回下标</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (arr[i] == value) &#123;</span><br><span class="line">				<span class="keyword">return</span> i;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="1-解决浮点型商业运算中丢失精度的问题"><a href="#1-解决浮点型商业运算中丢失精度的问题" class="headerlink" title="1.解决浮点型商业运算中丢失精度的问题"></a>1.解决浮点型商业运算中丢失精度的问题</h2><h3 id="分析原因"><a href="#分析原因" class="headerlink" title="分析原因"></a>分析原因</h3><p>我们知道整数类型没有精度丢失的问题，但是浮点数有精度丢失的问题，下面我们来探究一下其精度丢失的原因所在。</p>
+<p><strong>浮点数，分单精度（float）和双精度（double）：</strong></p>
+<p>float ，介于 -3.402823e38 和 +3.402823e38 之间的32位数字；</p>
+<p>double ，介于 -1.79769313486232e308 和 +1.79769313486232e308 之间的64位数字；</p>
+<p>我们知道，计算机只识别 0 和 1，所以数值都是以二进制的方式储存在内存中的。<br>所以要知道数值在内存中是如何储存的，需先将数值转为二进制<br>根据 IEEE 754 标准，任意一个二进制浮点数 V 均可表示为：V = (-1 ^ s) * M * (2 ^ e)。<br>其中 s ∈ {0, 1}；M ∈ [1, 2)；e 表示偏移指数。</p>
+<p>具体浮点数的 IEEE 754表示方法在我之前的博客有所讲解，不清楚的可以查看，这里就不解释了。</p>
+<h4 id="精度丢失原因"><a href="#精度丢失原因" class="headerlink" title="精度丢失原因"></a>精度丢失原因</h4><p>首先计算机进行的是二进制运算，我们输入的十进制数字会先转换成二进制，进行运算后再转换为十进制输出。Float和Double提供了快速的运算，然而问题在于转换为二进制的时候，有些数字不能完全转换，<strong>只能无限接近于原本的值</strong>，这就导致了在后来的运算会出现不正确结果的情况。</p>
+<p>我们先探究一下int 和 float同样都是用32位表示，但是为什么float范围就比int大很多呢？</p>
+<p>int取值范围：-2147483648~2147483647，远远不足float： -3.402823e38 ~+3.402823e38</p>
+<p>我们知道int数值是连续且等分的，而float数值是跳跃的，并且间隔不一定相等。都是用32位表示，也就是说int和float可存储数值的最大数量是相等的，为2的32次方。</p>
+<p>文字理解有点抽象，下面我们上图来看</p>
+<p><img data-src="3.png" alt="3.png"></p>
+<p>大概意思我们可以看到，在负数值范围内，float可以表示更加精确的数（图中较为密集的部分），但是在正数范围中，float表示的就不如int精确了，并且float数值不是等分表示的，这就造成了float的精度丢失。</p>
+<p>这样应该就能理解浮点数精度丢失的原因了，其实最根本原因还是计算机只能采取二进制存储数据</p>
+<h3 id="普通测试"><a href="#普通测试" class="headerlink" title="普通测试"></a>普通测试</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       System.out.println(<span class="number">0.05</span> + <span class="number">0.01</span>);</span><br><span class="line">       System.out.println(<span class="number">1.0</span> - <span class="number">0.42</span>);</span><br><span class="line">       System.out.println(<span class="number">4.015</span> * <span class="number">100</span>);</span><br><span class="line">       System.out.println(<span class="number">123.3</span> / <span class="number">100</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
+
+
+<p><img data-src="1.png" alt="1.png"></p>
+<p>如图所示，在进行加减乘除运算时，得到的结果并不是我们预期的结果，假设我们在电商项目内进行价格计算时就会出现问题，很有可能造成余额为 9.99999999999999，但是无法购买10元的商品。</p>
+<h3 id="使用Integer类型的BigDecimal构造器进行运算"><a href="#使用Integer类型的BigDecimal构造器进行运算" class="headerlink" title="使用Integer类型的BigDecimal构造器进行运算"></a>使用Integer类型的BigDecimal构造器进行运算</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    BigDecimal b1 = <span class="keyword">new</span> BigDecimal(<span class="number">0.05</span>);</span><br><span class="line">    BigDecimal b2 = <span class="keyword">new</span> BigDecimal(<span class="number">0.01</span>);</span><br><span class="line">    System.out.println(b1.add(b2));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="2.png" alt="2.png"></p>
+<p>结果如图所示，结果也不正确，支付时也会出现问题。</p>
+<h3 id="使用String类型的BigDecimal构造器进行运算"><a href="#使用String类型的BigDecimal构造器进行运算" class="headerlink" title="使用String类型的BigDecimal构造器进行运算"></a>使用String类型的BigDecimal构造器进行运算</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    BigDecimal b1 = <span class="keyword">new</span> BigDecimal(<span class="string">"0.05"</span>);</span><br><span class="line">    BigDecimal b2 = <span class="keyword">new</span> BigDecimal(<span class="string">"0.01"</span>);</span><br><span class="line">    System.out.println(b1.add(b2));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果为0.06，正确</p>
 
     </div>
 
@@ -305,7 +340,7 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 数据结构与算法</a>
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           </div>
 
         
@@ -314,13 +349,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/04/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F/" rel="prev" title="数据结构与算法-基数排序">
-      <i class="fa fa-chevron-left"></i> 数据结构与算法-基数排序
+    <a href="/2020/04/20/Java%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8-GC/" rel="prev" title="Java面试宝典-GC">
+      <i class="fa fa-chevron-left"></i> Java面试宝典-GC
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/04/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" rel="next" title="数据结构与算法-二分查找">
-      数据结构与算法-二分查找 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -380,6 +412,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-解决浮点型商业运算中丢失精度的问题"><span class="nav-text">1.解决浮点型商业运算中丢失精度的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析原因"><span class="nav-text">分析原因</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#精度丢失原因"><span class="nav-text">精度丢失原因</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#普通测试"><span class="nav-text">普通测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Integer类型的BigDecimal构造器进行运算"><span class="nav-text">使用Integer类型的BigDecimal构造器进行运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用String类型的BigDecimal构造器进行运算"><span class="nav-text">使用String类型的BigDecimal构造器进行运算</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

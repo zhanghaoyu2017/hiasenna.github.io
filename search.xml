@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>电商项目整理</title>
+      <link href="/2020/04/20/%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE%E6%95%B4%E7%90%86/"/>
+      <url>/2020/04/20/%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE%E6%95%B4%E7%90%86/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-解决浮点型商业运算中丢失精度的问题"><a href="#1-解决浮点型商业运算中丢失精度的问题" class="headerlink" title="1.解决浮点型商业运算中丢失精度的问题"></a>1.解决浮点型商业运算中丢失精度的问题</h2><h3 id="分析原因"><a href="#分析原因" class="headerlink" title="分析原因"></a>分析原因</h3><p>我们知道整数类型没有精度丢失的问题，但是浮点数有精度丢失的问题，下面我们来探究一下其精度丢失的原因所在。</p><p><strong>浮点数，分单精度（float）和双精度（double）：</strong></p><p>float ，介于 -3.402823e38 和 +3.402823e38 之间的32位数字；</p><p>double ，介于 -1.79769313486232e308 和 +1.79769313486232e308 之间的64位数字；</p><p>我们知道，计算机只识别 0 和 1，所以数值都是以二进制的方式储存在内存中的。<br>所以要知道数值在内存中是如何储存的，需先将数值转为二进制<br>根据 IEEE 754 标准，任意一个二进制浮点数 V 均可表示为：V = (-1 ^ s) * M * (2 ^ e)。<br>其中 s ∈ {0, 1}；M ∈ [1, 2)；e 表示偏移指数。</p><p>具体浮点数的 IEEE 754表示方法在我之前的博客有所讲解，不清楚的可以查看，这里就不解释了。</p><h4 id="精度丢失原因"><a href="#精度丢失原因" class="headerlink" title="精度丢失原因"></a>精度丢失原因</h4><p>首先计算机进行的是二进制运算，我们输入的十进制数字会先转换成二进制，进行运算后再转换为十进制输出。Float和Double提供了快速的运算，然而问题在于转换为二进制的时候，有些数字不能完全转换，<strong>只能无限接近于原本的值</strong>，这就导致了在后来的运算会出现不正确结果的情况。</p><p>我们先探究一下int 和 float同样都是用32位表示，但是为什么float范围就比int大很多呢？</p><p>int取值范围：-2147483648~2147483647，远远不足float： -3.402823e38 ~+3.402823e38</p><p>我们知道int数值是连续且等分的，而float数值是跳跃的，并且间隔不一定相等。都是用32位表示，也就是说int和float可存储数值的最大数量是相等的，为2的32次方。</p><p>文字理解有点抽象，下面我们上图来看</p><p><img data-src="3.png" alt="3.png"></p><p>大概意思我们可以看到，在负数值范围内，float可以表示更加精确的数（图中较为密集的部分），但是在正数范围中，float表示的就不如int精确了，并且float数值不是等分表示的，这就造成了float的精度丢失。</p><p>这样应该就能理解浮点数精度丢失的原因了，其实最根本原因还是计算机只能采取二进制存储数据</p><h3 id="普通测试"><a href="#普通测试" class="headerlink" title="普通测试"></a>普通测试</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       System.out.println(<span class="number">0.05</span> + <span class="number">0.01</span>);</span><br><span class="line">       System.out.println(<span class="number">1.0</span> - <span class="number">0.42</span>);</span><br><span class="line">       System.out.println(<span class="number">4.015</span> * <span class="number">100</span>);</span><br><span class="line">       System.out.println(<span class="number">123.3</span> / <span class="number">100</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure><p><img data-src="1.png" alt="1.png"></p><p>如图所示，在进行加减乘除运算时，得到的结果并不是我们预期的结果，假设我们在电商项目内进行价格计算时就会出现问题，很有可能造成余额为 9.99999999999999，但是无法购买10元的商品。</p><h3 id="使用Integer类型的BigDecimal构造器进行运算"><a href="#使用Integer类型的BigDecimal构造器进行运算" class="headerlink" title="使用Integer类型的BigDecimal构造器进行运算"></a>使用Integer类型的BigDecimal构造器进行运算</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    BigDecimal b1 = <span class="keyword">new</span> BigDecimal(<span class="number">0.05</span>);</span><br><span class="line">    BigDecimal b2 = <span class="keyword">new</span> BigDecimal(<span class="number">0.01</span>);</span><br><span class="line">    System.out.println(b1.add(b2));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><img data-src="2.png" alt="2.png"></p><p>结果如图所示，结果也不正确，支付时也会出现问题。</p><h3 id="使用String类型的BigDecimal构造器进行运算"><a href="#使用String类型的BigDecimal构造器进行运算" class="headerlink" title="使用String类型的BigDecimal构造器进行运算"></a>使用String类型的BigDecimal构造器进行运算</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    BigDecimal b1 = <span class="keyword">new</span> BigDecimal(<span class="string">"0.05"</span>);</span><br><span class="line">    BigDecimal b2 = <span class="keyword">new</span> BigDecimal(<span class="string">"0.01"</span>);</span><br><span class="line">    System.out.println(b1.add(b2));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>结果为0.06，正确</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 电商项目 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Java面试宝典-GC</title>
       <link href="/2020/04/20/Java%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8-GC/"/>
       <url>/2020/04/20/Java%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8-GC/</url>
