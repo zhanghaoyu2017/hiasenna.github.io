@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>数据结构与算法-二叉排序树</title>
+      <link href="/2020/04/21/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E4%BA%8C%E5%8F%89%E6%8E%92%E5%BA%8F%E6%A0%91/"/>
+      <url>/2020/04/21/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E4%BA%8C%E5%8F%89%E6%8E%92%E5%BA%8F%E6%A0%91/</url>
+      
+        <content type="html"><![CDATA[<h2 id="二叉排序树介绍"><a href="#二叉排序树介绍" class="headerlink" title="二叉排序树介绍"></a>二叉排序树介绍</h2><p><strong>二叉排序树：BST</strong>: (Binary Sort(Search) Tree), 对于二叉排序树的 <strong>任何一个非叶子节点</strong>，要求 <strong>左子节点的值比当</strong><br><strong>前节点的值小， 右子节点的值比当前节点的值大。</strong><br><strong>特别说明</strong>：如果有相同的值，可以将该节点放在左子节点或右子节点<br>比如针对前面的数据 (7, 3, 10, 12, 5, 1, 9) ，对应的二叉排序树为：</p><p><img data-src="1.png" alt="1.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据结构与算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据结构与算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>电商项目整理</title>
       <link href="/2020/04/20/%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE%E6%95%B4%E7%90%86/"/>
       <url>/2020/04/20/%E7%94%B5%E5%95%86%E9%A1%B9%E7%9B%AE%E6%95%B4%E7%90%86/</url>
