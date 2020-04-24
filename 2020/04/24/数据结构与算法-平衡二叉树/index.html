@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/04/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/04/24/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/3.png">
 <meta property="article:published_time" content="2020-04-24T03:31:16.000Z">
-<meta property="article:modified_time" content="2020-04-24T09:10:13.033Z">
+<meta property="article:modified_time" content="2020-04-24T15:39:13.778Z">
 <meta property="article:author" content="Hiasenna">
 <meta property="article:tag" content="数据结构与算法">
 <meta name="twitter:card" content="summary">
@@ -232,7 +232,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-04-24 11:31:16 / 修改时间：17:10:13" itemprop="dateCreated datePublished" datetime="2020-04-24T11:31:16+08:00">2020-04-24</time>
+              <time title="创建时间：2020-04-24 11:31:16 / 修改时间：23:39:13" itemprop="dateCreated datePublished" datetime="2020-04-24T11:31:16+08:00">2020-04-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -287,6 +287,7 @@
 <p>2) 思路分析(示意图)</p>
 <p><img data-src="2.png" alt="2.png"></p>
 <p><strong>左旋转的目的就是降低右子树的高度</strong></p>
+<p>3) 代码实现</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//左旋转方法</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">leftRotate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 创建新的结点，以当前根结点的值</span></span><br><span class="line">		Node newNode = <span class="keyword">new</span> Node(value);</span><br><span class="line">		<span class="comment">// 把新的结点的左子树设置成当前结点的左子树</span></span><br><span class="line">		newNode.left = <span class="keyword">this</span>.left;</span><br><span class="line">		<span class="comment">// 把新的结点的右子树设置成当前结点的右子树的左子树</span></span><br><span class="line">		newNode.right = <span class="keyword">this</span>.right.left;</span><br><span class="line">		<span class="comment">// 把当前结点的值替换成右子结点的值</span></span><br><span class="line">		<span class="keyword">this</span>.value = <span class="keyword">this</span>.right.value;</span><br><span class="line">		<span class="comment">// 把当前结点的右子树设置成当前结点右子树的右子树</span></span><br><span class="line">		<span class="keyword">this</span>.right = <span class="keyword">this</span>.right.right;</span><br><span class="line">		<span class="comment">// 把当前结点的左子树(左子结点)设置成新的结点</span></span><br><span class="line">		<span class="keyword">this</span>.left = newNode;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="应用案例-单旋转-右旋转"><a href="#应用案例-单旋转-右旋转" class="headerlink" title="应用案例-单旋转(右旋转)"></a>应用案例-单旋转(右旋转)</h3><p>1) 要求: 给你一个数列，创建出对应的平衡二叉树.数列 {10,12, 8, 9, 7, 6}<br>2) 思路分析(示意图)</p>
