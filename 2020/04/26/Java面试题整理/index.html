@@ -30,8 +30,9 @@
 <meta property="og:image" content="http://yoursite.com/2020/04/26/Java%E9%9D%A2%E8%AF%95%E9%A2%98%E6%95%B4%E7%90%86/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/04/26/Java%E9%9D%A2%E8%AF%95%E9%A2%98%E6%95%B4%E7%90%86/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/04/26/Java%E9%9D%A2%E8%AF%95%E9%A2%98%E6%95%B4%E7%90%86/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/26/Java%E9%9D%A2%E8%AF%95%E9%A2%98%E6%95%B4%E7%90%86/4.png">
 <meta property="article:published_time" content="2020-04-26T07:24:16.000Z">
-<meta property="article:modified_time" content="2020-04-28T04:11:18.836Z">
+<meta property="article:modified_time" content="2020-04-28T15:36:55.819Z">
 <meta property="article:author" content="Hiasenna">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -238,7 +239,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-28 12:11:18" itemprop="dateModified" datetime="2020-04-28T12:11:18+08:00">2020-04-28</time>
+                <time title="修改时间：2020-04-28 23:36:55" itemprop="dateModified" datetime="2020-04-28T23:36:55+08:00">2020-04-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,14 +264,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.6k</span>
+              <span>12k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>11 分钟</span>
             </span>
             <div class="post-description">Java面试题整理</div>
 
@@ -283,7 +284,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="JAVA面试题目"><a href="#JAVA面试题目" class="headerlink" title="JAVA面试题目"></a><strong>JAVA面试题目</strong></h2><h3 id="1-Java中的String，StringBuilder，StringBuffer三者的区别"><a href="#1-Java中的String，StringBuilder，StringBuffer三者的区别" class="headerlink" title="1.Java中的String，StringBuilder，StringBuffer三者的区别"></a>1.<strong>Java中的String，StringBuilder，StringBuffer三者的区别</strong></h3><p>执行速度：StringBuilder &gt; StringBuffer &gt; String<br>String：适用于少量的字符串操作的情况<br>StringBuilder：适用于单线程下在字符缓冲区进行大量操作的情况<br>StringBuffer：适用多线程下在字符缓冲区进行大量操作的情况</p>
+        <h2 id="JAVA基础部分"><a href="#JAVA基础部分" class="headerlink" title="JAVA基础部分"></a><strong>JAVA基础</strong>部分</h2><h3 id="1-Java中的String，StringBuilder，StringBuffer三者的区别"><a href="#1-Java中的String，StringBuilder，StringBuffer三者的区别" class="headerlink" title="1.Java中的String，StringBuilder，StringBuffer三者的区别"></a>1.<strong>Java中的String，StringBuilder，StringBuffer三者的区别</strong></h3><p>执行速度：StringBuilder &gt; StringBuffer &gt; String<br>String：适用于少量的字符串操作的情况<br>StringBuilder：适用于单线程下在字符缓冲区进行大量操作的情况<br>StringBuffer：适用多线程下在字符缓冲区进行大量操作的情况</p>
 <h3 id="2-Hashtable和HashMap的区别："><a href="#2-Hashtable和HashMap的区别：" class="headerlink" title="2.Hashtable和HashMap的区别："></a><strong>2.Hashtable和HashMap的区别：</strong></h3><p>a) 继承不同。 </p>
 <p>public class Hashtable extends Dictionary implements Map </p>
 <p>public class HashMap extends AbstractMap implements Map<br>b) Hashtable中的方法是同步的，而HashMap中的方法在缺省情况下是非同步的。在多线程并发的环境下，可以直接使用Hashtable，但是要使用HashMap的话就要自己增加同步处理了。<br>c) Hashtable 中， key 和 value 都不允许出现 null 值。 在 HashMap 中， null 可以作为键，这样的键只有一个；可以有一个或多个键所对应的值为 null 。当 get() 方法返回 null 值时，即可以表示 HashMap 中没有该键，也可以表示该键所对应的值为 null 。<strong>因此，在 HashMap 中不能由 get() 方法来判断 HashMap 中是否存在某个键， 而应该用 containsKey() 方法来判断。</strong><br>d) 两个遍历方式的内部实现上不同。Hashtable、HashMap都使用了Iterator。而由于历史原因，Hashtable还使用了Enumeration的方式 。<br>e) 哈希值的使用不同，HashTable直接使用对象的hashCode。而HashMap重新计算hash值。<br>f) Hashtable和HashMap它们两个内部实现方式的数组的初始大小和扩容的方式。<strong>HashTable中hash数组默认大小是11，增加的方式是old*2+1。HashMap中hash数组的默认大小是16，而且一定是2的指数。</strong><br>注： HashSet子类依靠hashCode()和equal()方法来区分重复元素。 HashSet内部使用Map保存数据，即将HashSet的数据作为Map的key值保存，这也是HashSet中元素不能重复的原因。而Map中保存key值的,会去判断当前Map中是否含有该Key对象，内部是先通过key的hashCode,确定有相同的hashCode之后，再通过equals方法判断是否相同。</p>
@@ -389,6 +390,88 @@
 <p>2、HashMap是线程不安全的，效率较高。而HashTalbe是线程安全的，效率较低。</p>
 <p> 线程安全但是我又想效率高？</p>
 <p>通过把整个Map分为N个Segment（类似HashTable），可以提供相同的线程安全，但是效率提升N倍，默认提升16倍。</p>
+<h3 id="16-讲一下线程的几种实现方式-启动方式？区分方式？"><a href="#16-讲一下线程的几种实现方式-启动方式？区分方式？" class="headerlink" title="16.讲一下线程的几种实现方式?启动方式？区分方式？"></a>16.讲一下线程的几种实现方式?启动方式？区分方式？</h3><h4 id="①实现方式"><a href="#①实现方式" class="headerlink" title="①实现方式"></a>①实现方式</h4><p>1、<strong>通过继承Thread类实现一个线程</strong></p>
+<p>2、<strong>通过实现Runnable接口实现一个线程</strong></p>
+<p>   继承扩展性不强，java总只支持单继承，如果一个类继承Thread就不能继承其他的类了。</p>
+<h4 id="②怎么启动？"><a href="#②怎么启动？" class="headerlink" title="②怎么启动？"></a>②怎么启动？</h4><p>   Thread thread = new Thread(继承了Thread的对象/实现了Runnable的对象)</p>
+<p>   thread.setName(“设置一个线程名称”);</p>
+<p>   thread.start();</p>
+<p>   启动线程使用start方法，而启动了以后执行的是run方法。</p>
+<h4 id="③怎么区分线程？在一个系统中有很多线程，每个线程都会打印日志，我想区分是哪个线程打印的怎么办？"><a href="#③怎么区分线程？在一个系统中有很多线程，每个线程都会打印日志，我想区分是哪个线程打印的怎么办？" class="headerlink" title="③怎么区分线程？在一个系统中有很多线程，每个线程都会打印日志，我想区分是哪个线程打印的怎么办？"></a>③怎么区分线程？在一个系统中有很多线程，每个线程都会打印日志，我想区分是哪个线程打印的怎么办？</h4><p>   thread.setName(“设置一个线程名称”); 这是一种规范，在创建线程完成后，都需要设置名称。</p>
+<h3 id="17-有没有使用过线程并发库"><a href="#17-有没有使用过线程并发库" class="headerlink" title="17.有没有使用过线程并发库?"></a>17.有没有使用过线程并发库?</h3><p>简单了解过？</p>
+<p>JDK5中增加了Doug Lea的并发库，这一引进给Java线程的管理和使用提供了强大的便利性。 java.util.current包中提供了对线程优化、管理的各项操作，使得线程的使用变得的心应手。该包提供了线程的运行，线程池的创建，线程生命周期的控制.</p>
+<p><strong>Java通过Executors提供四个静态方法创建四种线程池</strong>，分别为：</p>
+<p><strong>newCachedThreadPool</strong>创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。</p>
+<p><strong>newFixedThreadPool</strong> 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。</p>
+<p><strong>newScheduledThreadPool</strong> 创建一个定长线程池，支持定时及周期性任务执行。</p>
+<p><strong>newSingleThreadExecutor</strong> 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行</p>
+<h3 id="18-线程池的作用？"><a href="#18-线程池的作用？" class="headerlink" title="18.线程池的作用？"></a>18.线程池的作用？</h3><p>1、限定线程的个数，不会导致由于线程过多导致系统运行缓慢或崩溃</p>
+<p>2、线程池不需要每次都去创建或销毁，节约了资源、</p>
+<p>3、线程池不需要每次都去创建，响应时间更快。</p>
+<p>连接池也是一样</p>
+<h3 id="19-讲一下什么是设计模式？常用的设计模式有哪些？"><a href="#19-讲一下什么是设计模式？常用的设计模式有哪些？" class="headerlink" title="19.讲一下什么是设计模式？常用的设计模式有哪些？"></a>19.讲一下什么是设计模式？常用的设计模式有哪些？</h3><p>设计模式就是<strong>经过前人无数次的实践总结出的</strong>，设计过程中可以反复使用的、可以解决特定问题的<strong>设计方法</strong>。</p>
+<h4 id="单例-饿汉模式、懒汉模式"><a href="#单例-饿汉模式、懒汉模式" class="headerlink" title="单例(饿汉模式、懒汉模式)"></a>单例(饿汉模式、懒汉模式)</h4><p>1、构造方法私有化，除了自己类中能创建外其他地方都不能创建</p>
+<p>2、在自己的类中创建一个单实例（<strong>饿汉模式是一出来就创建创建单实例，而懒汉模式需要的时候才创建</strong>）</p>
+<p>3、提供一个方法获取该实例对象(<strong>创建时需要进行方法同步</strong>)</p>
+<h4 id="工厂模式-Spring-IOC就是使用了工厂模式"><a href="#工厂模式-Spring-IOC就是使用了工厂模式" class="headerlink" title="工厂模式:Spring IOC就是使用了工厂模式."></a>工厂模式:Spring IOC就是使用了工厂模式.</h4><p>​       对象的创建交给一个工厂去创建。</p>
+<h4 id="代理模式-Spring-AOP就是使用的动态代理。"><a href="#代理模式-Spring-AOP就是使用的动态代理。" class="headerlink" title="代理模式:Spring AOP就是使用的动态代理。"></a>代理模式:Spring AOP就是使用的动态代理。</h4><h2 id="JAVA-Web部分"><a href="#JAVA-Web部分" class="headerlink" title="JAVA Web部分"></a>JAVA Web部分</h2><h3 id="1-讲一下http-get和post请求的区别"><a href="#1-讲一下http-get和post请求的区别" class="headerlink" title="1.讲一下http get和post请求的区别?"></a>1.讲一下http get和post请求的区别?</h3><p>GET和POST请求都是http的请求方式，用户通过不同的http的请求方式完成对资源（url）的不同操作。GET，POST，PUT，DELETE就对应着对这个资源的查 ，改 ，增 ，删 4个操作,具体点来讲GET一般用于获取/查询资源信息，而POST一般用于更新资源信息</p>
+<p>1、<strong>Get请求提交的数据会在地址栏显示出来，而post请求不会再地址栏显示出来.</strong></p>
+<p>GET提交，请求的数据会附在URL之后（就是把数据放置在HTTP协议头中），以?分割URL和传输数据，多个参数用&amp;连接；</p>
+<p>POST提交：把提交的数据放置在是HTTP包的包体中。 <strong>因此，GET提交的数据会在地址栏中显示出来，而POST提交，地址栏不会改变</strong></p>
+<p>2、传输数据的大小</p>
+<p>http <strong>Get请求</strong>由于浏览器对<strong>地址长度</strong>的限制而导致传输的数据<strong>有限制</strong>。而POST请求不会因为地址长度限制而导致传输数据限制。</p>
+<p>3、安全性,<strong>POST的安全性要比GET的安全性高</strong>。由于数据是会在地址中呈现，所以可以通过历史记录找到密码等关键信息。</p>
+<h3 id="2-说一下你对servlet的理解？或者servlet是什么？"><a href="#2-说一下你对servlet的理解？或者servlet是什么？" class="headerlink" title="2.说一下你对servlet的理解？或者servlet是什么？"></a>2.说一下你对servlet的理解？或者servlet是什么？</h3><p><strong>Servlet</strong>（Server Applet），全称<strong>Java Servlet</strong>， <strong>是用Java编写的服务器端程序</strong>。而这些Sevlet都要实现Servlet这个接口。<strong>其主要功能在于交互式地浏览和修改数据，生成动态Web内容</strong>。Servlet运行于支持Java的应用服务器中。</p>
+<p> HttpServlet 重写doGet和doPost方法或者你也可以重写service方法完成对get和post请求的响应</p>
+<h3 id="3-简单说一下servlet的生命周期"><a href="#3-简单说一下servlet的生命周期" class="headerlink" title="3.简单说一下servlet的生命周期?"></a>3.简单说一下servlet的生命周期?</h3><p>servlet有良好的生存期的定义，包括加载和实例化、初始化、处理请求以及服务结束。这个生存期由javax.servlet.Servlet接口的init,service和destroy方法表达。</p>
+<p><strong>加载Servlet的class—-&gt;实例化Servlet—–&gt;调用Servlet的init完成初始化—-&gt;响应请求（Servlet的service方法）—–&gt;Servlet容器关闭时(Servlet的destory方法)</strong></p>
+<p>Servlet启动时，开始加载servlet生命周期开始。Servlet被服务器实例化后，容器运行其init方法，请求到达时运行其service方法，service方法自动派遣运行与请求对应的doXXX方法（doGet，doPost）等，当服务器决定将实例销毁的时候(服务器关闭)调用其destroy方法。</p>
+<h3 id="4-Servlet-API中forward-与redirect-的区别？"><a href="#4-Servlet-API中forward-与redirect-的区别？" class="headerlink" title="4.Servlet API中forward() 与redirect()的区别？"></a>4.Servlet API中forward() 与redirect()的区别？</h3><p>1、forward是服务器端的转向而redirect是客户端的跳转。 请求转发—–重定向</p>
+<p>2、使用forward浏览器的地址不会发生改变。而redirect会发生改变。</p>
+<p>3、Forward是一次请求中完成。而redirect是重新发起请求。</p>
+<p>4、Forward是在服务器端完成，而不用客户端重新发起请求，效率较高。</p>
+<h3 id="5-JSP和Servlet有哪些相同点和不同点"><a href="#5-JSP和Servlet有哪些相同点和不同点" class="headerlink" title="5.JSP和Servlet有哪些相同点和不同点?"></a>5.JSP和Servlet有哪些相同点和不同点?</h3><p>JSP是Servlet技术的扩展，所有的jsp文件都会被翻译为一个继承HttpServlet的类。也就是jsp最终也是一个Servlet.这个Servlet对外提供服务。</p>
+<p><img data-src="4.png" alt="4.png"></p>
+<p><strong>Servlet和JSP最主要的不同点在于JSP侧重于视图，Servlet主要用于控制逻辑。</strong></p>
+<p>Servlet如果要实现html的功能，必须使用Writer输出对应的html,比较麻烦。而JSP的情况是Java和HTML可以组合成一个扩展名为.jsp的文件,做界面展示比较方便而嵌入逻辑比较复杂。</p>
+<h3 id="6-jsp有哪些内置对象-作用分别是什么"><a href="#6-jsp有哪些内置对象-作用分别是什么" class="headerlink" title="6. jsp有哪些内置对象?作用分别是什么?"></a>6. jsp有哪些内置对象?作用分别是什么?</h3><p><strong>9个内置的对象：</strong> </p>
+<p>request 用户端请求，此请求会包含来自GET/POST请求的参数 </p>
+<p>response 网页传回用户端的回应 </p>
+<p>pageContext 网页的属性是在这里管理 </p>
+<p>session 与请求有关的会话期 </p>
+<p>application servlet正在执行的内容 </p>
+<p>out 用来传送回应的输出 </p>
+<p>config servlet的构架部件 </p>
+<p>page JSP网页本身 </p>
+<p>exception 针对错误网页，未捕捉的例外 </p>
+<p><strong>四大作用域</strong>：<strong>pageContext request session application</strong> 可以通过jstl从四大作用域中取值.</p>
+<p>Jsp传递值request session application cookie也能传值</p>
+<h3 id="7-说一下session和cookie的区别？你在项目中都有哪些地方使用了？"><a href="#7-说一下session和cookie的区别？你在项目中都有哪些地方使用了？" class="headerlink" title="7.说一下session和cookie的区别？你在项目中都有哪些地方使用了？"></a>7.说一下session和cookie的区别？你在项目中都有哪些地方使用了？</h3><p>Session和cookie都是会话(Seesion)跟踪技术。Cookie通过在客户端记录信息确定用户身份，Session通过在服务器端记录信息确定用户身份。但是Session的实现依赖于Cookie,sessionId(session的唯一标识需要存放在客户端).</p>
+<h4 id="cookie-和session-的区别："><a href="#cookie-和session-的区别：" class="headerlink" title="cookie 和session 的区别："></a>cookie 和session 的区别：</h4><p>1、cookie数据存放在客户的浏览器上，session数据放在服务器上。</p>
+<p>2、cookie不是很安全，别人可以分析存放在本地的COOKIE并进行COOKIE欺骗<br>    考虑到安全应当使用session。</p>
+<p>3、session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能,考虑到减轻服务器性能方面，应当使用COOKIE。</p>
+<p>4、单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie。</p>
+<p>5、所以个人建议：<br>    将<strong>登陆信息等重要信息存放为SESSION</strong><br>    其他信息如果需要保留，可以放在COOKIE中，比如<strong>购物车</strong></p>
+<p><strong>购物车最好使用cookie，但是cookie是可以在客户端禁用的，这时候我们要使用cookie+数据库的方式实现，当从cookie中不能取出数据时，就从数据库获取。</strong></p>
+<h3 id="8-MVC的各个部分都有那些技术来实现"><a href="#8-MVC的各个部分都有那些技术来实现" class="headerlink" title="8.MVC的各个部分都有那些技术来实现?"></a>8.MVC的各个部分都有那些技术来实现?</h3><p>M(Model) 模型 javabean</p>
+<p>V(View) 视图  html jsp volicity freemaker</p>
+<p>C(Control) 控制器 Servlet,Action</p>
+<p>Jsp+Servlet+javabean 最经典mvc模式,实际上就是model2的实现方式，就是把视图和逻辑隔离开来</p>
+<p>Model1的方式 jsp+service+dao</p>
+<p>MOdel2的方式 jsp+servlet+service+dao</p>
+<p>使用struts2和springmvc这样的mvc框架后，jsp+核心控制器+action+javabean</p>
+<h2 id="数据库部分"><a href="#数据库部分" class="headerlink" title="数据库部分"></a>数据库部分</h2><h3 id="1-数据库的分类及常用的数据库"><a href="#1-数据库的分类及常用的数据库" class="headerlink" title="1.数据库的分类及常用的数据库"></a>1.数据库的分类及常用的数据库</h3><p>数据库分为：<strong>关系型数据库</strong>和<strong>非关系型数据库</strong></p>
+<p>​          关系型：mysql oracle sqlserver等</p>
+<p>​          非关系型：redis,memcache,mogodb,hadoop等</p>
+<h3 id="2-简单介绍一下关系数据库三范式？"><a href="#2-简单介绍一下关系数据库三范式？" class="headerlink" title="2.简单介绍一下关系数据库三范式？"></a>2.简单介绍一下关系数据库三范式？</h3><p>范式就是规范,就是关系型数据库在设计表时，要遵循的三个规范。</p>
+<p>要想满足第二范式必须先满足第一范式，要满足第三范式必须先满足第二范式。</p>
+<p>第一范式（1NF）是指<strong>数据库表的每一列都是不可分割的基本数据项</strong>，同一列中不能有多个值，即实体中的某个属性不能有多个值或者不能有重复的属性。列数据的不可分割</p>
+<p>二范式（2NF）<strong>要求数据库表中的每个行必须可以被唯一地区分</strong>。为实现区分通常需要为表加上一个列，以存储各个实例的唯一标识。(主键)</p>
+<p> 满足第三范式（3NF）必须先满足第二范式（2NF）。简而言之，第三范式（3NF）要求<strong>一个数据库表中不包含已在其它表中已包含的非主关键字信息</strong>。(外键)</p>
+<p>1NF:字段不可分;</p>
+<p>2NF:有主键，非主键字段依赖主键;</p>
+<p>3NF:非主键字段不能相互依赖;</p>
+<p>反三范式,<strong>有的时候为了效率，可以设置重复或者可以推导出的字段.</strong><br>        订单（总价）和订单项（单价）</p>
 
     </div>
 
@@ -494,7 +577,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JAVA面试题目"><span class="nav-text">JAVA面试题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Java中的String，StringBuilder，StringBuffer三者的区别"><span class="nav-text">1.Java中的String，StringBuilder，StringBuffer三者的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Hashtable和HashMap的区别："><span class="nav-text">2.Hashtable和HashMap的区别：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-乐观锁和悲观锁"><span class="nav-text">3.乐观锁和悲观锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-java的8种基本数据类型"><span class="nav-text">4.java的8种基本数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-synchronized和Lock有什么区别？"><span class="nav-text">5.synchronized和Lock有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-请说明一下JAVA中反射的实现过程和作用分别是什么？"><span class="nav-text">6.请说明一下JAVA中反射的实现过程和作用分别是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-请你介绍一下map的分类和常见的情况"><span class="nav-text">7.请你介绍一下map的分类和常见的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-说说-synchronized-关键字和-volatile-关键字的区别？"><span class="nav-text">8.说说 synchronized 关键字和 volatile 关键字的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-hashCode-与-equals-？为什么重写equals时必须重写hashCode方法？"><span class="nav-text">9.hashCode 与 equals ？为什么重写equals时必须重写hashCode方法？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#hashCode（）介绍"><span class="nav-text">hashCode（）介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么要有-hashCode"><span class="nav-text">为什么要有 hashCode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hashCode（）与equals（）的相关规定"><span class="nav-text">hashCode（）与equals（）的相关规定</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-面向对象的特征有哪些方面"><span class="nav-text">10.面向对象的特征有哪些方面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-有了基本数据类型，为什么还需要包装类型？"><span class="nav-text">11.有了基本数据类型，为什么还需要包装类型？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#装箱和拆箱"><span class="nav-text">装箱和拆箱</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-说一下”-”和equals方法究竟有什么区别？"><span class="nav-text">12.说一下”&#x3D;&#x3D;”和equals方法究竟有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-讲一下String和StringBuilder的区别-final-？StringBuffer和StringBuilder的区别"><span class="nav-text">13.讲一下String和StringBuilder的区别(final)？StringBuffer和StringBuilder的区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-讲一下java中的集合"><span class="nav-text">14.讲一下java中的集合?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#List又分为两种："><span class="nav-text">List又分为两种：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-讲一下HashMap哈HashTable的区别-HashTable和ConcurrentHashMap的区别"><span class="nav-text">15.讲一下HashMap哈HashTable的区别?HashTable和ConcurrentHashMap的区别?</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JAVA基础部分"><span class="nav-text">JAVA基础部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Java中的String，StringBuilder，StringBuffer三者的区别"><span class="nav-text">1.Java中的String，StringBuilder，StringBuffer三者的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Hashtable和HashMap的区别："><span class="nav-text">2.Hashtable和HashMap的区别：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-乐观锁和悲观锁"><span class="nav-text">3.乐观锁和悲观锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-java的8种基本数据类型"><span class="nav-text">4.java的8种基本数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-synchronized和Lock有什么区别？"><span class="nav-text">5.synchronized和Lock有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-请说明一下JAVA中反射的实现过程和作用分别是什么？"><span class="nav-text">6.请说明一下JAVA中反射的实现过程和作用分别是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-请你介绍一下map的分类和常见的情况"><span class="nav-text">7.请你介绍一下map的分类和常见的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-说说-synchronized-关键字和-volatile-关键字的区别？"><span class="nav-text">8.说说 synchronized 关键字和 volatile 关键字的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-hashCode-与-equals-？为什么重写equals时必须重写hashCode方法？"><span class="nav-text">9.hashCode 与 equals ？为什么重写equals时必须重写hashCode方法？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#hashCode（）介绍"><span class="nav-text">hashCode（）介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么要有-hashCode"><span class="nav-text">为什么要有 hashCode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hashCode（）与equals（）的相关规定"><span class="nav-text">hashCode（）与equals（）的相关规定</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-面向对象的特征有哪些方面"><span class="nav-text">10.面向对象的特征有哪些方面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-有了基本数据类型，为什么还需要包装类型？"><span class="nav-text">11.有了基本数据类型，为什么还需要包装类型？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#装箱和拆箱"><span class="nav-text">装箱和拆箱</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-说一下”-”和equals方法究竟有什么区别？"><span class="nav-text">12.说一下”&#x3D;&#x3D;”和equals方法究竟有什么区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-讲一下String和StringBuilder的区别-final-？StringBuffer和StringBuilder的区别"><span class="nav-text">13.讲一下String和StringBuilder的区别(final)？StringBuffer和StringBuilder的区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-讲一下java中的集合"><span class="nav-text">14.讲一下java中的集合?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#List又分为两种："><span class="nav-text">List又分为两种：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-讲一下HashMap哈HashTable的区别-HashTable和ConcurrentHashMap的区别"><span class="nav-text">15.讲一下HashMap哈HashTable的区别?HashTable和ConcurrentHashMap的区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-讲一下线程的几种实现方式-启动方式？区分方式？"><span class="nav-text">16.讲一下线程的几种实现方式?启动方式？区分方式？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#①实现方式"><span class="nav-text">①实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#②怎么启动？"><span class="nav-text">②怎么启动？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#③怎么区分线程？在一个系统中有很多线程，每个线程都会打印日志，我想区分是哪个线程打印的怎么办？"><span class="nav-text">③怎么区分线程？在一个系统中有很多线程，每个线程都会打印日志，我想区分是哪个线程打印的怎么办？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-有没有使用过线程并发库"><span class="nav-text">17.有没有使用过线程并发库?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-线程池的作用？"><span class="nav-text">18.线程池的作用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-讲一下什么是设计模式？常用的设计模式有哪些？"><span class="nav-text">19.讲一下什么是设计模式？常用的设计模式有哪些？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单例-饿汉模式、懒汉模式"><span class="nav-text">单例(饿汉模式、懒汉模式)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工厂模式-Spring-IOC就是使用了工厂模式"><span class="nav-text">工厂模式:Spring IOC就是使用了工厂模式.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代理模式-Spring-AOP就是使用的动态代理。"><span class="nav-text">代理模式:Spring AOP就是使用的动态代理。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JAVA-Web部分"><span class="nav-text">JAVA Web部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-讲一下http-get和post请求的区别"><span class="nav-text">1.讲一下http get和post请求的区别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-说一下你对servlet的理解？或者servlet是什么？"><span class="nav-text">2.说一下你对servlet的理解？或者servlet是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-简单说一下servlet的生命周期"><span class="nav-text">3.简单说一下servlet的生命周期?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Servlet-API中forward-与redirect-的区别？"><span class="nav-text">4.Servlet API中forward() 与redirect()的区别？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-JSP和Servlet有哪些相同点和不同点"><span class="nav-text">5.JSP和Servlet有哪些相同点和不同点?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-jsp有哪些内置对象-作用分别是什么"><span class="nav-text">6. jsp有哪些内置对象?作用分别是什么?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-说一下session和cookie的区别？你在项目中都有哪些地方使用了？"><span class="nav-text">7.说一下session和cookie的区别？你在项目中都有哪些地方使用了？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie-和session-的区别："><span class="nav-text">cookie 和session 的区别：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-MVC的各个部分都有那些技术来实现"><span class="nav-text">8.MVC的各个部分都有那些技术来实现?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库部分"><span class="nav-text">数据库部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-数据库的分类及常用的数据库"><span class="nav-text">1.数据库的分类及常用的数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-简单介绍一下关系数据库三范式？"><span class="nav-text">2.简单介绍一下关系数据库三范式？</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -510,7 +593,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">76</span>
+          <span class="site-state-item-count">77</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -562,12 +645,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">416k</span>
+    <span title="站点总字数">422k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:18</span>
+    <span title="站点阅读时长">6:24</span>
 </div>
 
         

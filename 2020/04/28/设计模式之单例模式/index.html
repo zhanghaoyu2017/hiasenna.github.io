@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#836FFF","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="JavaSE 锁">
+  <meta name="description" content="设计模式之单例模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java面试宝典-锁">
-<meta property="og:url" content="http://yoursite.com/2020/04/20/Java%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8-%E9%94%81/index.html">
+<meta property="og:title" content="设计模式之单例模式">
+<meta property="og:url" content="http://yoursite.com/2020/04/28/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="MyNotes">
-<meta property="og:description" content="JavaSE 锁">
+<meta property="og:description" content="设计模式之单例模式">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-04-20T13:13:57.000Z">
-<meta property="article:modified_time" content="2020-04-20T13:16:04.225Z">
+<meta property="article:published_time" content="2020-04-28T08:52:55.000Z">
+<meta property="article:modified_time" content="2020-04-28T09:41:21.171Z">
 <meta property="article:author" content="Hiasenna">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2020/04/20/Java%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8-%E9%94%81/">
+<link rel="canonical" href="http://yoursite.com/2020/04/28/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>Java面试宝典-锁 | MyNotes</title>
+  <title>设计模式之单例模式 | MyNotes</title>
   
 
 
@@ -204,7 +204,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/20/Java%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8-%E9%94%81/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/28/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -217,7 +217,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Java面试宝典-锁
+          设计模式之单例模式
         </h1>
 
         <div class="post-meta">
@@ -228,7 +228,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-04-20 21:13:57 / 修改时间：21:16:04" itemprop="dateCreated datePublished" datetime="2020-04-20T21:13:57+08:00">2020-04-20</time>
+              <time title="创建时间：2020-04-28 16:52:55 / 修改时间：17:41:21" itemprop="dateCreated datePublished" datetime="2020-04-28T16:52:55+08:00">2020-04-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -236,7 +236,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8/" itemprop="url" rel="index"><span itemprop="name">Java面试宝典</span></a>
+                  <a href="/categories/Java%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">Java面试</span></a>
                 </span>
             </span>
 
@@ -253,7 +253,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.8k</span>
+              <span>2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -262,7 +262,7 @@
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               <span>2 分钟</span>
             </span>
-            <div class="post-description">JavaSE 锁</div>
+            <div class="post-description">设计模式之单例模式</div>
 
         </div>
       </header>
@@ -273,24 +273,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="●-请你简述一下synchronized与java-util-concurrent-locks-Lock的相同之处和不同之处？"><a href="#●-请你简述一下synchronized与java-util-concurrent-locks-Lock的相同之处和不同之处？" class="headerlink" title="● 请你简述一下synchronized与java.util.concurrent.locks.Lock的相同之处和不同之处？"></a>● 请你简述一下synchronized与java.util.concurrent.locks.Lock的相同之处和不同之处？</h2><p>考察点：锁机制</p>
-<h3 id="参考回答："><a href="#参考回答：" class="headerlink" title="参考回答："></a>参考回答：</h3><p>主要相同点：Lock能完成synchronized所实现的所有功能</p>
-<p>主要不同点：Lock有比synchronized更精确的线程语义和更好的性能。synchronized会自动释放锁，而Lock一定要求程序员手工释放，并且必须在finally从句中释放。</p>
-<h2 id="●-JAVA中如何确保N个线程可以访问N个资源，但同时又不导致死锁？"><a href="#●-JAVA中如何确保N个线程可以访问N个资源，但同时又不导致死锁？" class="headerlink" title="● JAVA中如何确保N个线程可以访问N个资源，但同时又不导致死锁？"></a>● JAVA中如何确保N个线程可以访问N个资源，但同时又不导致死锁？</h2><p>考察点：死锁</p>
-<h3 id="参考回答：-1"><a href="#参考回答：-1" class="headerlink" title="参考回答："></a>参考回答：</h3><p>使用多线程的时候，一种非常简单的避免死锁的方式就是：指定获取锁的顺序，并强制线程按照指定的顺序获取锁。因此，如果所有的线程都是以同样的顺序加锁和释放锁，就不会出现死锁了。</p>
-<p>预防死锁，预先破坏产生死锁的四个条件。互斥不可能破坏，所以有如下三种方法：</p>
-<p>1.破坏请求和保持条件，进程必须等所有要请求的资源都空闲时才能申请资源，这种方法会使资源浪费严重(有些资源可能仅在运行初期或结束时才使用，甚至根本不使用). 允许进程获取初期所需资源后，便开始运行，运行过程中再逐步释放自己占有的资源，比如有一个进程的任务是把数据复制到磁盘中再打印，前期只需获得磁盘资源而不需要获得打印机资源，待复制完毕后再释放掉磁盘资源。这种方法比第一种方法好，会使资源利用率上升。</p>
-<p>2.破坏不可抢占条件，这种方法代价大，实现复杂。</p>
-<p>3.破坏循坏等待条件，对各进程请求资源的顺序做一个规定，避免相互等待。这种方法对资源的利用率比前两种都高，但是前期要为设备指定序号，新设备加入会有一个问题，其次对用户编程也有限制。</p>
-<h2 id="●-请问什么是死锁-deadlock"><a href="#●-请问什么是死锁-deadlock" class="headerlink" title="● 请问什么是死锁(deadlock)?"></a>● 请问什么是死锁(deadlock)?</h2><p>考察点：线程死锁</p>
-<h3 id="参考回答：-2"><a href="#参考回答：-2" class="headerlink" title="参考回答："></a>参考回答：</h3><p>两个线程或两个以上线程都在等待对方执行完毕才能继续往下执行的时候就发生了死锁。结果就是这些线程都陷入了无限的等待中。</p>
-<p>例如，如果线程1锁住了A，然后尝试对B进行加锁，同时线程2已经锁住了B，接着尝试对A进行加锁，这时死锁就发生了。线程1永远得不到B，线程2也永远得不到A，并且它们永远也不会知道发生了这样的事情。为了得到彼此的对象（A和B），它们将永远阻塞下去。这种情况就是一个死锁。</p>
-<h2 id="●-请说明一下锁和同步的区别。"><a href="#●-请说明一下锁和同步的区别。" class="headerlink" title="● 请说明一下锁和同步的区别。"></a>● 请说明一下锁和同步的区别。</h2><p>考察点：锁</p>
-<h3 id="参考回答：-3"><a href="#参考回答：-3" class="headerlink" title="参考回答："></a>参考回答：</h3><p>用法上的不同：<br>synchronized既可以加在方法上，也可以加载特定代码块上，而lock需要显示地指定起始位置和终止位置。<br>synchronized是托管给JVM执行的，lock的锁定是通过代码实现的，它有比synchronized更精确的线程语义。<br>性能上的不同：<br>lock接口的实现类ReentrantLock，不仅具有和synchronized相同的并发性和内存语义，还多了超时的获取锁、定时锁、等候和中断锁等。<br>在竞争不是很激烈的情况下，synchronized的性能优于ReentrantLock，竞争激烈的情况下synchronized的性能会下降的非常快，而ReentrantLock则基本不变。<br>锁机制不同：<br>synchronized获取锁和释放锁的方式都是在块结构中，当获取多个锁时，必须以相反的顺序释放，并且是自动解锁。而Lock则需要开发人员手动释放，并且必须在finally中释放，否则会引起死锁。</p>
-<h2 id="●-请说明一下synchronized的可重入怎么实现。"><a href="#●-请说明一下synchronized的可重入怎么实现。" class="headerlink" title="● 请说明一下synchronized的可重入怎么实现。"></a>● 请说明一下synchronized的可重入怎么实现。</h2><p>考察点：锁</p>
-<h3 id="参考回答：-4"><a href="#参考回答：-4" class="headerlink" title="参考回答："></a>参考回答：</h3><p>每个锁关联一个线程持有者和一个计数器。当计数器为0时表示该锁没有被任何线程持有，那么任何线程都都可能获得该锁而调用相应方法。当一个线程请求成功后，JVM会记下持有锁的线程，并将计数器计为1。此时其他线程请求该锁，则必须等待。而该持有锁的线程如果再次请求这个锁，就可以再次拿到这个锁，同时计数器会递增。当线程退出一个synchronized方法/块时，计数器会递减，如果计数器为0则释放该锁。</p>
-<h2 id="●-请讲一下非公平锁和公平锁在reetrantlock里的实现过程是怎样的。"><a href="#●-请讲一下非公平锁和公平锁在reetrantlock里的实现过程是怎样的。" class="headerlink" title="● 请讲一下非公平锁和公平锁在reetrantlock里的实现过程是怎样的。"></a>● 请讲一下非公平锁和公平锁在reetrantlock里的实现过程是怎样的。</h2><p>考察点：锁</p>
-<h3 id="参考回答：-5"><a href="#参考回答：-5" class="headerlink" title="参考回答："></a>参考回答：</h3><p>如果一个锁是公平的，那么锁的获取顺序就应该符合请求的绝对时间顺序，FIFO。对于非公平锁，只要CAS设置同步状态成功，则表示当前线程获取了锁，而公平锁还需要判断当前节点是否有前驱节点，如果有，则表示有线程比当前线程更早请求获取锁，因此需要等待前驱线程获取并释放锁之后才能继续获取锁。</p>
+        <p>所谓单例，就是整个程序有且仅有一个实例。该类负责创建自己的对象，同时确保只有一个对象被创建。在Java，一般常用在工具类的实现或创建对象需要消耗资源。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a><strong>特点</strong></h3><ul>
+<li>类构造器私有</li>
+<li>持有自己类型的属性</li>
+<li>对外提供获取实例的静态方法</li>
+</ul>
+<h3 id="懒汉模式"><a href="#懒汉模式" class="headerlink" title="懒汉模式"></a><strong>懒汉模式</strong></h3><p>线程不安全，延迟初始化，严格意义上不是不是单例模式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;  </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span> <span class="params">()</span></span>&#123;&#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;  </span><br><span class="line">        instance = <span class="keyword">new</span> Singleton();  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> instance;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="饿汉模式"><a href="#饿汉模式" class="headerlink" title="饿汉模式"></a><strong>饿汉模式</strong></h3><p>线程安全，比较常用，但容易产生垃圾，因为一开始就初始化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">new</span> Singleton();  </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span> <span class="params">()</span></span>&#123;&#125;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> instance;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="双重锁模式"><a href="#双重锁模式" class="headerlink" title="双重锁模式"></a><strong>双重锁模式</strong></h3><p>线程安全，延迟初始化。这种方式采用双锁机制，安全且在多线程情况下能保持高性能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton singleton;  </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span> <span class="params">()</span></span>&#123;&#125;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getSingleton</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;  </span><br><span class="line">        <span class="keyword">synchronized</span> (Singleton<span class="class">.<span class="keyword">class</span>) </span>&#123;  </span><br><span class="line">        <span class="keyword">if</span> (singleton == <span class="keyword">null</span>) &#123;  </span><br><span class="line">            singleton = <span class="keyword">new</span> Singleton();  </span><br><span class="line">        &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> singleton;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>双重检查模式，进行了两次的判断，第一次是为了避免不要的实例，第二次是为了进行同步，避免多线程问题。由于<code>singleton=new Singleton()</code>对象的创建在JVM中可能会进行重排序，在多线程访问下存在风险，使用<code>volatile</code>修饰<code>signleton</code>实例变量有效，解决该问题。</p>
+<h3 id="静态内部类单例模式"><a href="#静态内部类单例模式" class="headerlink" title="静态内部类单例模式"></a><strong>静态内部类单例模式</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123; </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> Inner.instance;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Inner</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton instance = <span class="keyword">new</span> Singleton();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只有第一次调用getInstance方法时，虚拟机才加载 Inner 并初始化instance ，只有一个线程可以获得对象的初始化锁，其他线程无法进行初始化，保证对象的唯一性。目前此方式是所有单例模式中最推荐的模式，但具体还是根据项目选择。</p>
+<h3 id="枚举单例模式"><a href="#枚举单例模式" class="headerlink" title="枚举单例模式"></a><strong>枚举单例模式</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Singleton &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认枚举实例的创建是线程安全的，并且在任何情况下都是单例。实际上</p>
+<ul>
+<li>枚举类隐藏了私有的构造器。</li>
+<li>枚举类的域 是相应类型的一个实例对象<br>那么枚举类型日常用例是这样子的：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Singleton  &#123;</span><br><span class="line">    INSTANCE </span><br><span class="line"> </span><br><span class="line">    <span class="comment">//doSomething 该实例支持的行为</span></span><br><span class="line">      </span><br><span class="line">    <span class="comment">//可以省略此方法，通过Singleton.INSTANCE进行操作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton get <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Singleton.INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>枚举单例模式在《Effective Java》中推荐的单例模式之一。但枚举实例在日常开发是很少使用的，就是很简单以导致可读性较差。</p>
+<p>在以上所有的单例模式中，推荐静态内部类单例模式。主要是非常直观，即保证线程安全又保证唯一性。<br>众所周知，单例模式是创建型模式，都会新建一个实例。那么一个重要的问题就是反序列化。当实例被写入到文件到反序列化成实例时，我们需要重写<code>readResolve</code>方法，以让实例唯一。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Object <span class="title">readResolve</span><span class="params">()</span> <span class="keyword">throws</span> ObjectStreamException</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> singleton;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -330,13 +348,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/04/20/Java%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8-%E9%9B%86%E5%90%88/" rel="prev" title="Java面试宝典-集合">
-      <i class="fa fa-chevron-left"></i> Java面试宝典-集合
+    <a href="/2020/04/28/ConcurrentHashMap%E8%AF%A6%E8%A7%A3/" rel="prev" title="ConcurrentHashMap详解">
+      <i class="fa fa-chevron-left"></i> ConcurrentHashMap详解
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/04/20/Java%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8-GC/" rel="next" title="Java面试宝典-GC">
-      Java面试宝典-GC <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -396,7 +411,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#●-请你简述一下synchronized与java-util-concurrent-locks-Lock的相同之处和不同之处？"><span class="nav-text">● 请你简述一下synchronized与java.util.concurrent.locks.Lock的相同之处和不同之处？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考回答："><span class="nav-text">参考回答：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#●-JAVA中如何确保N个线程可以访问N个资源，但同时又不导致死锁？"><span class="nav-text">● JAVA中如何确保N个线程可以访问N个资源，但同时又不导致死锁？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考回答：-1"><span class="nav-text">参考回答：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#●-请问什么是死锁-deadlock"><span class="nav-text">● 请问什么是死锁(deadlock)?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考回答：-2"><span class="nav-text">参考回答：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#●-请说明一下锁和同步的区别。"><span class="nav-text">● 请说明一下锁和同步的区别。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考回答：-3"><span class="nav-text">参考回答：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#●-请说明一下synchronized的可重入怎么实现。"><span class="nav-text">● 请说明一下synchronized的可重入怎么实现。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考回答：-4"><span class="nav-text">参考回答：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#●-请讲一下非公平锁和公平锁在reetrantlock里的实现过程是怎样的。"><span class="nav-text">● 请讲一下非公平锁和公平锁在reetrantlock里的实现过程是怎样的。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考回答：-5"><span class="nav-text">参考回答：</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#懒汉模式"><span class="nav-text">懒汉模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#饿汉模式"><span class="nav-text">饿汉模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双重锁模式"><span class="nav-text">双重锁模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态内部类单例模式"><span class="nav-text">静态内部类单例模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#枚举单例模式"><span class="nav-text">枚举单例模式</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
