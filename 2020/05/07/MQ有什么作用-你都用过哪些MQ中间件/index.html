@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#836FFF","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="第15讲：MQ 有什么作用？你都用过哪些 MQ 中间件？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MQ有什么作用,你都用过哪些MQ中间件">
+<meta property="og:url" content="http://yoursite.com/2020/05/07/MQ%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8-%E4%BD%A0%E9%83%BD%E7%94%A8%E8%BF%87%E5%93%AA%E4%BA%9BMQ%E4%B8%AD%E9%97%B4%E4%BB%B6/index.html">
+<meta property="og:site_name" content="MyNotes">
+<meta property="og:description" content="第15讲：MQ 有什么作用？你都用过哪些 MQ 中间件？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/05/07/MQ%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8-%E4%BD%A0%E9%83%BD%E7%94%A8%E8%BF%87%E5%93%AA%E4%BA%9BMQ%E4%B8%AD%E9%97%B4%E4%BB%B6/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/07/MQ%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8-%E4%BD%A0%E9%83%BD%E7%94%A8%E8%BF%87%E5%93%AA%E4%BA%9BMQ%E4%B8%AD%E9%97%B4%E4%BB%B6/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/07/MQ%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8-%E4%BD%A0%E9%83%BD%E7%94%A8%E8%BF%87%E5%93%AA%E4%BA%9BMQ%E4%B8%AD%E9%97%B4%E4%BB%B6/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/07/MQ%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8-%E4%BD%A0%E9%83%BD%E7%94%A8%E8%BF%87%E5%93%AA%E4%BA%9BMQ%E4%B8%AD%E9%97%B4%E4%BB%B6/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/07/MQ%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8-%E4%BD%A0%E9%83%BD%E7%94%A8%E8%BF%87%E5%93%AA%E4%BA%9BMQ%E4%B8%AD%E9%97%B4%E4%BB%B6/5.png">
+<meta property="article:published_time" content="2020-05-07T09:31:17.000Z">
+<meta property="article:modified_time" content="2020-05-07T09:40:23.834Z">
+<meta property="article:author" content="Hiasenna">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/07/MQ%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8-%E4%BD%A0%E9%83%BD%E7%94%A8%E8%BF%87%E5%93%AA%E4%BA%9BMQ%E4%B8%AD%E9%97%B4%E4%BB%B6/1.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/05/07/MQ%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8-%E4%BD%A0%E9%83%BD%E7%94%A8%E8%BF%87%E5%93%AA%E4%BA%9BMQ%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>MQ有什么作用,你都用过哪些MQ中间件 | MyNotes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MyNotes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-top">
+
+    <a href="/top/" rel="section"><i class="fa fa-fw fa-signal"></i>阅读排行</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/zhanghaoyu2017" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/07/MQ%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8-%E4%BD%A0%E9%83%BD%E7%94%A8%E8%BF%87%E5%93%AA%E4%BA%9BMQ%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hiasenna">
+      <meta itemprop="description" content="自律 稳健">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MyNotes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MQ有什么作用,你都用过哪些MQ中间件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-07 17:31:17 / 修改时间：17:40:23" itemprop="dateCreated datePublished" datetime="2020-05-07T17:31:17+08:00">2020-05-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E9%9D%A2%E8%AF%95%E7%9C%9F%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">Java面试真题</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+            <div class="post-description">第15讲：MQ 有什么作用？你都用过哪些 MQ 中间件？</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在第 10 课时中讲过“手写消息队列”，当时粗略的讲了 Java API 中使用 Queue 实现自定义消息队列，以及使用 Delayed 实现延迟队列的示例；同时还讲了 RabbitMQ 中的一些基础概念。本课时我们将会更加深入的讲解 MQ（Message Queue，消息队列）中间件，以及这些热门中间件的具体使用。</p>
+<p>我们本课时的面试题是，MQ 常见的使用场景有哪些？你都用过哪些 MQ 中间件？</p>
+<h2 id="典型回答"><a href="#典型回答" class="headerlink" title="典型回答"></a>典型回答</h2><p>在介绍 MQ 的使用场景之前，先来回忆一下 MQ 的作用。MQ 可以用来实现削峰填谷，也就是使用它可以解决短时间内爆发式的请求任务，在不使用 MQ 的情况下会导致服务处理不过来，出现应用程序假死的情况，而使用了 MQ 之后可以把这些请求先暂存到消息队列中，然后进行排队执行，那么就不会出现应用程序假死的情况了，所以它的<strong>第一个应用就是商品秒杀以及产品抢购等使用场景</strong>，如下图所示：</p>
+<p><img data-src="1.png" alt="1.png"></p>
+<h3 id="使用-MQ-实现消息通讯"><a href="#使用-MQ-实现消息通讯" class="headerlink" title="使用 MQ 实现消息通讯"></a>使用 MQ 实现消息通讯</h3><p>使用 MQ 可以作为消息通讯的实现手段，利用它可以实现点对点的通讯或者多对多的聊天室功能。</p>
+<p>点对点的消息通讯如下图所示：</p>
+<p><img data-src="2.png" alt="2.png"></p>
+<p>多对多的消息通讯如下图所示：</p>
+<p><img data-src="3.png" alt="3.png"></p>
+<h3 id="使用-MQ-实现日志系统"><a href="#使用-MQ-实现日志系统" class="headerlink" title="使用 MQ 实现日志系统"></a>使用 MQ 实现日志系统</h3><p>可使用 MQ 实现对日志的采集和转发，比如有多个日志写入到程序中，然后把日志添加到 MQ，紧接着由日志处理系统订阅 MQ，最后 MQ 将消息接收并转发给日志处理系统，这样就完成了日志的分析和保存功能，如下图所示：</p>
+<p><img data-src="4.png" alt="4.png"></p>
+<p>常用的 MQ 中间件有 RabbitMQ、Kafka 和 Redis 等，其中 Redis 属于轻量级的消息队列，而 RabbitMQ、Kafka 属于比较成熟且比较稳定和高效的 MQ 中间件。</p>
+<h3 id="考点分析"><a href="#考点分析" class="headerlink" title="考点分析"></a>考点分析</h3><p>MQ 属于中高级或优秀的程序员必备的技能，对于 MQ 中间件掌握的数量则是你技术广度和编程经验的直接体现信息之一。值得庆幸的是，关于 MQ 中间件的实现原理和使用方式都比较类似，因此如果开发者掌握一项 MQ 中间件再去熟悉其他 MQ 中间件时，会非常的容易。</p>
+<p>MQ 相关的面试题还有这些：</p>
+<ul>
+<li>MQ 的特点是什么？引入 MQ 中间件会带来哪些问题？</li>
+<li>常见的 MQ 中间件的优缺点分析。</li>
+</ul>
+<h2 id="知识扩展"><a href="#知识扩展" class="headerlink" title="知识扩展"></a>知识扩展</h2><h3 id="MQ-的特点及注意事项"><a href="#MQ-的特点及注意事项" class="headerlink" title="MQ 的特点及注意事项"></a>MQ 的特点及注意事项</h3><p>MQ 具有以下 5 个特点。</p>
+<ul>
+<li><p><strong>先进先出：</strong>消息队列的顺序一般在入列时就基本确定了，最先到达消息队列的信息，一般情况下也会先转发给订阅的消费者，我们把这种实现了先进先出的数据结构称之为队列。</p>
+</li>
+<li><p><strong>发布、订阅工作模式</strong>：生产者也就是消息的创建者，负责创建和推送数据到消息服务器；消费者也就是消息的接收方，用于处理数据和确认消息的消费；消息队列也是 MQ 服务器中最重要的组成元素之一，它负责消息的存储，这三者是 MQ 中的三个重要角色。而它们之间的消息传递与转发都是通过发布以及订阅的工作模式来进行的，即生产者把消息推送到消息队列，消费者订阅到相关的消息后进行消费，在消息非阻塞的情况下，此模式基本可以实现同步操作的效果。并且此种工作模式会把请求的压力转移给 MQ 服务器，以减少了应用服务器本身的并发压力。</p>
+</li>
+<li><p><strong>持久化</strong>：持久化是把消息从内存存储到磁盘的过程，并且在服务器重启或者发生宕机的情况下，重新启动服务器之后是保证数据不会丢失的一种手段，也是目前主流 MQ 中间件都会提供的重要功能。</p>
+</li>
+<li><p><strong>分布式：</strong>MQ 的一个主要特性就是要应对大流量、大数据的高并发环境，一个单体的 MQ 服务器是很难应对这种高并发的压力的，所以 MQ 服务器都会支持分布式应用的部署，以分摊和降低高并发对 MQ 系统的冲击。</p>
+</li>
+<li><p><strong>消息确认：</strong>消息消费确认是程序稳定性和安全性的一个重要考核指标，假如消费者在拿到消息之后突然宕机了，那么 MQ 服务器会误认为此消息已经被消费者消费了，从而造成消息丢失的问题，而目前市面上的主流 </p>
+<p>MQ 都实现了消息确认的功能，保证了消息不会丢失，从而保证了系统的稳定性。</p>
+</li>
+</ul>
+<h4 id="引入-MQ-系统会带来的问题"><a href="#引入-MQ-系统会带来的问题" class="headerlink" title="引入 MQ 系统会带来的问题"></a>引入 MQ 系统会带来的问题</h4><p>任何系统的引入都是有两面性的，MQ 也不例外，在引入 MQ 之后，可能会带来以下两个问题。</p>
+<ul>
+<li>增加了系统的运行风险：引入 MQ 系统，则意味着新增了一套系统，并且其他的业务系统会对 MQ 系统进行深度依赖，系统部署的越多则意味着发生故障的可能性就越大，如果 MQ 系统挂掉的话可能会导致整个业务系统瘫痪。</li>
+<li>增加了系统的复杂度：引入 MQ 系统后，需要考虑消息丢失、消息重复消费、消息的顺序消费等问题，同时还需要引入新的客户端来处理 MQ 的业务，增加了编程的运维门槛，增加了系统的复杂性。</li>
+</ul>
+<p>使用 MQ 需要注意的问题，不要过度依赖 MQ，比如发送短信验证码或邮件等功能，这种低频但有可能比较耗时的功能可以使用多线程异步处理即可，不用任何的功能都依赖 MQ 中间件来完成，但像秒杀抢购可能会导致超卖（也就是把货卖多了，库存变成负数了）等短时间内高并发的请求，此时建议使用 MQ 中间件。</p>
+<h3 id="常用的-MQ-中间件"><a href="#常用的-MQ-中间件" class="headerlink" title="常用的 MQ 中间件"></a>常用的 MQ 中间件</h3><p>常用的 MQ 中间件有 Redis、RabbitMQ、Kafka，下来我们分别来看看各自的作用。</p>
+<h4 id="Redis-轻量级的消息中间件"><a href="#Redis-轻量级的消息中间件" class="headerlink" title="Redis 轻量级的消息中间件"></a>Redis 轻量级的消息中间件</h4><p>Redis 是一个高效的内存性数据库中间件，但使用 Redis 也可以实现消息队列的功能。</p>
+<p>早期的 Redis（Redis 5.0 之前）是不支持消息确认的，那时候我们可以通过 List 数据类型的 lpush 和 rpop 方法来实现队列消息的存入和读取功能，或者使用 Redis 提供的发布订阅（pub/sub）功能来实现消息队列，但这种模式不支持持久化，List 虽然支持持久化但不能设置复杂的路由规则来匹配多个消息，并且他们二者都不支持消息消费确认。</p>
+<p>于是在 Redis 5.0 之后提供了新的数据类型 Stream 解决了消息确认的问题，但它同样不能提供复杂的路由匹配规则，因此在业务不复杂的场景下可以尝试性的使用 Redis 提供的消息队列。</p>
+<h4 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h4><p>在第 10 课时中，我们对 RabbitMQ 有过初步的讲解，它是一个实现了标准的高级消息队列协议（AMQP，Advanced Message Queuing Protocol）的老牌开源消息中间件，最初起源于金融系统，后来被普遍应用在了其他分布式系统中，它支持集群部署，和多种客户端调用。</p>
+<p>之前主要介绍了 RabbitMQ 的基础功能，本课时我们重点来看 RabbitMQ 集群相关的内容。</p>
+<p>RabbitMQ 集群是由多个节点组成，但默认情况下每个节点并不是存储所有队列的完整拷贝，这是出于存储空间和性能的考虑，因为如果存储了队列的完整拷贝，那么就会有很多冗余的重复数据，并且在新增节点的情况下，不但没有新增存储空间，反而需要更大的空间来存储旧的数据；同样的道理，如果每个节点都保存了所有队列的完整信息，那么非查询操作的性能就会很慢，就会需要更多的网络带宽和磁盘负载来存储这些数据。</p>
+<p>为了能兼顾性能和稳定性，RabbitMQ 集群的节点分为两种类型，即磁盘节点和内存节点，对于磁盘节点来说显然它的优势就是稳定，可以把相关数据保存下来，若 RabbitMQ 因为意外情况宕机，重启之后保证了数据不丢失；而内存节点的优势是快，因为是在内存中进行数据交换和操作，因此性能比磁盘节点要高出很多倍。</p>
+<p>如果是单个 RabbitMQ 那么就必须要求是磁盘节点，否则当 RabbitMQ 服务器重启之后所有的数据都会丢失，这样显然是不能接受的。在 RabbitMQ 的集群中，至少需要一个磁盘节点，这样至少能保证集群数据的相对可靠性。</p>
+<blockquote>
+<p>小贴士：对于 RabbitMQ 集群来说，我们启动集群节点的顺序应该是先启动磁盘节点再启动内存节点，而关闭的顺序正好和启动的顺序相反，不然可能会导致 RabbitMQ 集群启动失败或者是数据丢失等异常问题。</p>
+</blockquote>
+<h4 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h4><p>Kafka 是 LinkedIn 公司开发的基于 ZooKeeper 的多分区、多副本的分布式消息系统，它于 2010 年贡献给了 Apache 基金会，并且成为了 Apache 的顶级开源项目。其中 ZooKeeper 的作用是用来为 Kafka 提供集群元数据管理以及节点的选举和发现等功能。</p>
+<p>与 RabbitMQ 比较类似，一个典型的 Kafka 是由多个 Broker、多个生产者和消费者，以及 ZooKeeper 集群组成的，其中 Broker 可以理解为一个代理，Kafka 集群中的一台服务器称之为一个 Broker，其组成框架图如下所示：</p>
+<p><img data-src="5.png" alt="5.png"></p>
+<h3 id="Kafka-VS-RabbitMQ"><a href="#Kafka-VS-RabbitMQ" class="headerlink" title="Kafka VS RabbitMQ"></a>Kafka VS RabbitMQ</h3><p>Kafka（2.0.0）和 RabbitMQ（3.6.10）的区别主要体现在以下几点：</p>
+<ul>
+<li>Kafka 支持消息回溯，它可以根据 Offset（消息偏移量）、TimeStamp（时间戳）等维度进行消息回溯，而 RabbitMQ 并不支持消息回溯；</li>
+<li>Kafka 的消息消费是基于拉取数据的模式，也就是消费者主动向服务器端发送拉取消息请求，而 RabbitMQ 支持拉取数据模式和主动推送数据的模式，也就说 RabbitMQ 服务器会主动把消息推送给订阅的消费者；</li>
+<li>在相同配置下，Kafka 的吞吐量通常会比 RabbitMQ 高一到两个级别，比如在单机模式下，RabbitMQ 的吞吐量大概是万级别的处理能力，而 Kafka 则可以到达十万甚至是百万的吞吐级别；</li>
+<li>Kafka 从 0.11 版本就开始支持幂等性了，当然所谓的幂等性指的是对单个生产者在单分区上的单会话的幂等操作，但对于全局幂等性则还需要结合业务来处理，比如，消费者在消费完一条消息之后没有来得及确认就发生异常了，等到恢复之后又得重新消费原来消费过的消息，类似这种情况，是无法在消息中间件层面来保证的，这个时候则需要引入更多的外部资源来保证全局幂等性，比如唯一的订单号、消费之前先做去重判断等；而 RabbitMQ 是没有幂等性功能支持的；</li>
+<li>RabbitMQ 支持多租户的功能，也就是常说的 Virtual Host（vhost），每一个 vhost 相当于一个独立的小型 RabbitMQ 服务器，它们拥有自己独立的交换器、消息队列及绑定关系等，并且拥有自己独立权限，而且多个 vhost 之间是绝对隔离的，但 Kafka 并不支持多租户的功能。</li>
+</ul>
+<p>Kafka 和 RabbitMQ 都支持分布式集群部署，并且都支持数据持久化和消息消费确认等 MQ 的核心功能，对于 MQ 的选型要结合自己团队本身的情况，从性能、稳定性及二次开发的难易程度等维度来进行综合的考量并选择。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本课时我们讲了 MQ 的常见使用场景，以及常见的 MQ 中间件（Redis、RabbitMQ、Kafka）及其优缺点分析；同时还了解了 MQ 的五大特点：先进先出、发布和订阅的模式、持久化、分布式和消息确认等；接着讲了 MQ 引入对系统可能带来的风险；最后讲了 MQ 在使用时需要注意的问题。希望本课时对你整体了解 MQ 系统有所帮助。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Hiasenna 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Hiasenna 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/05/%E7%AE%80%E8%B0%88%E4%BD%A0%E5%AF%B9synchronized%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E7%90%86%E8%A7%A3/" rel="prev" title="简谈你对synchronized关键字的理解">
+      <i class="fa fa-chevron-left"></i> 简谈你对synchronized关键字的理解
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#典型回答"><span class="nav-text">典型回答</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-MQ-实现消息通讯"><span class="nav-text">使用 MQ 实现消息通讯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-MQ-实现日志系统"><span class="nav-text">使用 MQ 实现日志系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#考点分析"><span class="nav-text">考点分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#知识扩展"><span class="nav-text">知识扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MQ-的特点及注意事项"><span class="nav-text">MQ 的特点及注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引入-MQ-系统会带来的问题"><span class="nav-text">引入 MQ 系统会带来的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的-MQ-中间件"><span class="nav-text">常用的 MQ 中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis-轻量级的消息中间件"><span class="nav-text">Redis 轻量级的消息中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RabbitMQ"><span class="nav-text">RabbitMQ</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kafka"><span class="nav-text">Kafka</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kafka-VS-RabbitMQ"><span class="nav-text">Kafka VS RabbitMQ</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-text">小结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hiasenna"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Hiasenna</p>
+  <div class="site-description" itemprop="description">自律 稳健</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">79</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhanghaoyu2017" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhanghaoyu2017" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hiasenna</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">461k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
