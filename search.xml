@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>SpringCloud-Netflix学习</title>
+      <link href="/2020/05/17/SpringCloud-Netflix%E5%AD%A6%E4%B9%A0/"/>
+      <url>/2020/05/17/SpringCloud-Netflix%E5%AD%A6%E4%B9%A0/</url>
+      
+        <content type="html"><![CDATA[<h2 id="SpringCloud简介："><a href="#SpringCloud简介：" class="headerlink" title="SpringCloud简介："></a>SpringCloud简介：</h2><p>Spring Cloud 是一系列框架的有序集合，它利用 Spring Boot 的开发便利性简化了分布式系统的开发，比如服务发现、服务网关、服务路由、链路追踪等。Spring Cloud 并不重复造轮子，而是将市面上开发得比较好的模块集成进去，进行封装，从而减少了各模块的开发成本。换句话说：Spring Cloud 提供了构建分布式系统所需的“全家桶”。</p><h2 id="Spring-Cloud-优缺点"><a href="#Spring-Cloud-优缺点" class="headerlink" title="Spring Cloud 优缺点"></a>Spring Cloud 优缺点</h2><h3 id="其主要优点有："><a href="#其主要优点有：" class="headerlink" title="其主要优点有："></a>其主要优点有：</h3><p>集大成者，Spring Cloud 包含了微服务架构的方方面面。<br>约定优于配置，基于注解，没有配置文件。<br>轻量级组件，Spring Cloud 整合的组件大多比较轻量级，且都是各自领域的佼佼者。<br>开发简便，Spring Cloud 对各个组件进行了大量的封装，从而简化了开发。<br>开发灵活，Spring Cloud 的组件都是解耦的，开发人员可以灵活按需选择组件。</p><h3 id="接下来，我们看下它的缺点："><a href="#接下来，我们看下它的缺点：" class="headerlink" title="接下来，我们看下它的缺点："></a>接下来，我们看下它的缺点：</h3><p>项目结构复杂，每一个组件或者每一个服务都需要创建一个项目。<br>部署门槛高，项目部署需要配合 Docker 等容器技术进行集群部署，而要想深入了解 Docker，学习成本高。<br>Spring Cloud 的优势是显而易见的。因此对于想研究微服务架构的同学来说，学习 Spring Cloud 是一个不错的选择。</p><h2 id="微服务的四个核心问题："><a href="#微服务的四个核心问题：" class="headerlink" title="微服务的四个核心问题："></a>微服务的四个核心问题：</h2><p>1.服务很多，客户端之间该怎么进行访问？</p><p>2.这么多服务，服务之间如何通信？</p><p>3.这么多服务，如何治理？</p><p>4.服务挂了怎么办？</p><h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>Spring Cloud  是一个生态，解决上面四个问题。</p><ol><li><p>SpringCloud NetFlix  一站式解决方案</p><p>api网关，zuul组件</p><p>Frign —HttpClient——Http通信方式，同步，阻塞</p><p>服务注册发现：Eureka</p><p>熔断机制：Hystrix</p></li></ol><ol start="2"><li><p>Apache Dubbo Zookeeper  半自动，需要整合别人的</p><p>API：没有，找第三方组件 ，或者自己实现</p><p>Dubbo ：RPC通信组件</p><p>Zookeeper </p><p>没有熔断机制，借助Hystrix</p><p>所以说，Dubbo这个方案并不完善。只专注于RPC</p></li><li><p>SpringCloud Alibaba 最新的一站式解决方案</p><p>更简单，和第一个类似，界面不一样了，简化了</p></li></ol><p>新概念：服务网格 Server Mesh </p><p>  istio</p><p>万变不离其宗</p><p>1.API  解决路由问题</p><p>2.Http RPC 解决通信问题</p><p>3.注册和发现  解决高可用问题</p><p>4.熔断机制 解决服务降级的问题  防止服务雪崩</p><h2 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h2><p>1.什么是微服务？</p><p>2.微服务之间是如何独立通讯的？</p><p>3.SpringCloud 和 Dubbo之间有哪些区别？</p><p>4.SpringBoot和SpringCloud，请你谈谈对他们的理解</p><p>5.什么是服务熔断？什么是服务降级</p><p>6.微服务的优缺点分别是什么？说下你在项目开发中遇到的问题</p><p>7.你所知道的微服务技术栈有哪些？</p><p>8.eureka 和 zookeeper都可以提供服务注册与发现的功能，请说说两个的区别？</p><h2 id="微服务优缺点"><a href="#微服务优缺点" class="headerlink" title="微服务优缺点"></a>微服务优缺点</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul><li>单一职责原则 苹果手机</li><li>每个服务足够内聚，足够小，代码容易理解没这样能聚焦一个指定的业务功能或业务需求</li><li>开发简单，开发效率提高 一个服务可能就是专一的只干一件事；</li><li>微服务能够被小团队单独开发，这个小团队是2-5人的开发人员组成</li><li>微服务是松耦合的，是具有功能意义的服务，无论是在开发或者部署阶段都是独立的</li><li>微服务能使用不同的语言开发</li><li>易于和第三方集成，微服务允许容易且灵活的方式集成自动部署，通过持续集成工具，如jenkins,Hudson,bamboo</li><li>微服务易于被一个开发人员理解，修改和维护，这样小团队能够更关注自己的工作结果，无需通过合作才能体现价值</li><li>微服务允许你利用融合最新技术</li><li><strong>微服务知识业务逻辑的代码 不会和html css 或 其它界面混合</strong></li><li><strong>每个微服务都有自己的存储能力，可以有自己的数据库，也可以有统一数据库</strong></li></ul><h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul><li>开发人员要处理分布式系统的复杂性</li><li>多服务运维难度，随着服务的增加，运维的压力也增大</li><li>系统部署依赖</li><li>服务间通信成本</li><li>数据一致性</li><li>系统集成测试</li><li>性能监控 </li></ul><h2 id="微服务技术栈"><a href="#微服务技术栈" class="headerlink" title="微服务技术栈"></a>微服务技术栈</h2><table><thead><tr><th>微服务条目</th><th>落地技术</th></tr></thead><tbody><tr><td>服务开发</td><td>SpringBoot，Spring，SpringMVC</td></tr><tr><td>服务配置与管理</td><td>NetFlix公司的Archaius、阿里的Diamond等</td></tr><tr><td>服务注册与实现</td><td>Eureka、Consul、Zookeeper</td></tr><tr><td>服务调用</td><td>Rest、RPC、gRPC</td></tr><tr><td>服务熔断器</td><td>Hystrix、Envoy</td></tr><tr><td>负载均衡</td><td>Ribbon、Nginx等</td></tr><tr><td>服务接口调用(客户端调用服务的简化工具)</td><td>Feign</td></tr><tr><td>消息队列</td><td>Kafka、RabbitMQ、ActiveMQ等</td></tr><tr><td>服务配置中心管理</td><td>SpringCloudConfig、Chef等</td></tr><tr><td>服务路由(API网关)</td><td>Zuul等</td></tr><tr><td>服务监控</td><td>Zabbix、Nagios、Metrics、Specatator</td></tr><tr><td>全链路追踪</td><td>Zipkin、Brave、Dapper</td></tr><tr><td>服务部署</td><td>Docker、OpenStack、Kubernetes</td></tr><tr><td>数据流操作开发包</td><td>SpringCloud Stream(封装Redis Rabbit Kafka等发送接收消息)</td></tr><tr><td>事件消息总线</td><td>SpringCloud Bus</td></tr></tbody></table><h2 id="SpringBoot-和-SpringCloud-的关系"><a href="#SpringBoot-和-SpringCloud-的关系" class="headerlink" title="SpringBoot 和 SpringCloud 的关系"></a>SpringBoot 和 SpringCloud 的关系</h2><ul><li>SpringBoot 专注于快速方便地开发单个个体微服务</li><li>SpringCloud是专注全局的微服务协调整理治理框架，它将SpringBoot 开发的一个个单体微服务整合并管理起来，为各个微服务之间提供：配置管理，服务发现，断路器，路由，微代理，事件总线，全局锁，决策竞选，分布式回话等等集成服务</li><li>SpringBoot可以离开SpringCloud独立使用，开发项目，但是SpringCloud离不开SpringBoot，属于依赖关系</li><li>SpringBoot专注于快速、方便的开发单个个体微服务，SpringCloud关注全局的微服务治理框架</li></ul><h2 id="传统网站架构图"><a href="#传统网站架构图" class="headerlink" title="传统网站架构图"></a>传统网站架构图</h2><p><img data-src="1.png" alt="1.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> SpringCloud </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SpringCloud </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Swagger笔记</title>
       <link href="/2020/05/16/Swagger%E7%AC%94%E8%AE%B0/"/>
       <url>/2020/05/16/Swagger%E7%AC%94%E8%AE%B0/</url>
